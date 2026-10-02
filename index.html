@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tran Huu Thang - Information Systems Student</title>
+  <title>Tran Huu Thang - Portfolio | Information Systems</title>
   <!-- Anti-FOUC & Zero-CLS immediate theme initialization -->
   <script>
     (function () {
@@ -23,10 +23,11 @@
     Skip to main content
   </a>
 
+  <!-- Header & Accessible Theme Switcher -->
   <header role="banner" class="site-header">
     <hgroup class="site-branding">
       <h1 class="site-title">Tran Huu Thang</h1>
-      <p class="site-tagline">3rd-Year Information Systems Student | UIT</p>
+      <p class="site-tagline">3rd-Year Information Systems Student | UIT (VNU-HCM)</p>
     </hgroup>
     <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Switch to dark theme" aria-pressed="false">
       <span class="theme-toggle-icon" aria-hidden="true">🌙</span>
@@ -34,49 +35,158 @@
     </button>
   </header>
 
+  <!-- Primary Navigation Landmark -->
   <nav role="navigation" aria-label="Primary" class="site-nav">
     <ul class="nav-list">
       <li class="nav-item"><a href="#about" class="nav-link">About</a></li>
+      <li class="nav-item"><a href="#skills" class="nav-link">Skills</a></li>
       <li class="nav-item"><a href="#projects" class="nav-link">Projects</a></li>
+      <li class="nav-item"><a href="#contact" class="nav-link">Contact</a></li>
     </ul>
   </nav>
 
-  <main id="main-content" role="main">
-    <section id="about" class="section about-section" aria-labelledby="about-heading">
-      <h2 id="about-heading" class="section-title">About Me</h2>
-      <p class="section-text">
-        I am a 3rd-year student majoring in Information Systems at the University of Information Technology (UIT - VNU-HCM). I am passionate about web application development, database management, and building accessible, modern software systems.
+  <!-- Main Landmark -->
+  <main id="main-content" role="main" class="main-layout">
+    <!-- Hero / About Section -->
+    <section id="about" class="section hero-section" aria-labelledby="hero-heading">
+      <img src="assets/portrait.svg" alt="Portrait of Tran Huu Thang" width="160" height="160" class="hero-portrait" loading="eager" decoding="async">
+      <hgroup class="hero-text-group">
+        <h2 id="hero-heading" class="hero-title">About Me</h2>
+        <p class="hero-subtitle">Undergraduate Engineer in Information Systems</p>
+      </hgroup>
+      <p class="hero-pitch">
+        I am a third-year student majoring in Information Systems at the University of Information Technology (UIT - VNU-HCM). I focus on designing robust database architectures and engineering accessible, high-performance web applications with clean, semantic standards.
       </p>
     </section>
 
+    <!-- Skills Matrix -->
+    <section id="skills" class="section skills-section" aria-labelledby="skills-heading">
+      <h2 id="skills-heading" class="section-title">Skills Matrix</h2>
+      <ul class="skills-categories-grid">
+        <li class="skills-category-card">
+          <h3 class="category-title">Frontend Engineering</h3>
+          <ul class="badge-list">
+            <li class="badge" data-category="frontend">Semantic HTML5</li>
+            <li class="badge" data-category="frontend">Modern CSS3 &amp; Grid</li>
+            <li class="badge" data-category="frontend">JavaScript (ESNext)</li>
+            <li class="badge" data-category="frontend">React.js</li>
+            <li class="badge" data-category="frontend">WAI-ARIA A11y</li>
+          </ul>
+        </li>
+        <li class="skills-category-card">
+          <h3 class="category-title">Backend &amp; Databases</h3>
+          <ul class="badge-list">
+            <li class="badge" data-category="backend">Node.js</li>
+            <li class="badge" data-category="backend">Express.js</li>
+            <li class="badge" data-category="backend">MySQL</li>
+            <li class="badge" data-category="backend">MongoDB</li>
+            <li class="badge" data-category="backend">RESTful APIs</li>
+          </ul>
+        </li>
+        <li class="skills-category-card">
+          <h3 class="category-title">Architecture &amp; Tools</h3>
+          <ul class="badge-list">
+            <li class="badge" data-category="tools">Git &amp; GitHub</li>
+            <li class="badge" data-category="tools">WBS &amp; Agile</li>
+            <li class="badge" data-category="tools">Chrome DevTools</li>
+            <li class="badge" data-category="tools">Performance Profiling</li>
+          </ul>
+        </li>
+      </ul>
+    </section>
+
+    <!-- Projects Section -->
     <section id="projects" class="section projects-section" aria-labelledby="projects-heading">
       <h2 id="projects-heading" class="section-title">Featured Projects</h2>
       <ul class="projects-grid">
         <li class="project-item">
-          <article class="project-card">
-            <h3 class="card-title">Token Theming Engine</h3>
-            <p class="card-desc">Zero-runtime CSS custom properties engine delivering WCAG 2.2 AA contrast compliance and persistent states.</p>
-            <a href="#projects" class="project-link">Learn More &rarr;</a>
+          <article class="project-card" data-category="frontend">
+            <header class="card-header">
+              <h3 class="card-title">Distributed State Engine</h3>
+              <span class="badge">TypeScript</span>
+            </header>
+            <p class="card-desc">Lightweight event bus built without external libraries.</p>
+            <footer class="card-footer">
+              <a href="#projects" class="project-link" aria-label="View Distributed State Engine source code">Source Code</a>
+            </footer>
           </article>
         </li>
         <li class="project-item">
-          <article class="project-card">
-            <h3 class="card-title">Responsive 2D Grid Shell</h3>
-            <p class="card-desc">Intrinsic grid architecture adapting seamlessly from 375px mobile viewports to ultra-wide displays without horizontal shift.</p>
-            <a href="#projects" class="project-link">Learn More &rarr;</a>
+          <article class="project-card" data-category="frontend">
+            <header class="card-header">
+              <h3 class="card-title">Token Theming Architecture</h3>
+              <span class="badge">CSS Grid</span>
+            </header>
+            <p class="card-desc">Zero-runtime CSS custom properties engine delivering WCAG 2.2 AA contrast compliance and persistent dark mode states.</p>
+            <footer class="card-footer">
+              <a href="#projects" class="project-link" aria-label="View Token Theming Architecture source code">Source Code</a>
+            </footer>
           </article>
         </li>
         <li class="project-item">
-          <article class="project-card">
-            <h3 class="card-title">Accessible Landmark Core</h3>
-            <p class="card-desc">Strict semantic HTML5 landmark tree compliant with screen-reader assistive navigation standards.</p>
-            <a href="#projects" class="project-link">Learn More &rarr;</a>
+          <article class="project-card" data-category="backend">
+            <header class="card-header">
+              <h3 class="card-title">Academic Information Portal</h3>
+              <span class="badge">MySQL / Node.js</span>
+            </header>
+            <p class="card-desc">Relational database management system with normalized 3NF schema and secure RESTful CRUD operations.</p>
+            <footer class="card-footer">
+              <a href="#projects" class="project-link" aria-label="View Academic Information Portal repository">Source Code</a>
+            </footer>
+          </article>
+        </li>
+        <li class="project-item">
+          <article class="project-card" data-category="accessibility">
+            <header class="card-header">
+              <h3 class="card-title">Accessible Landmark Core</h3>
+              <span class="badge">WAI-ARIA</span>
+            </header>
+            <p class="card-desc">Strict semantic HTML5 landmark tree tested with screen-reader assistive navigation standards and keyboard flows.</p>
+            <footer class="card-footer">
+              <a href="#projects" class="project-link" aria-label="View Accessible Landmark Core source code">Source Code</a>
+            </footer>
           </article>
         </li>
       </ul>
     </section>
+
+    <!-- Contact Form Section -->
+    <section id="contact" class="section contact-section" aria-labelledby="contact-heading">
+      <h2 id="contact-heading" class="section-title">Contact Me</h2>
+      <form id="contact-form" class="contact-form" novalidate aria-labelledby="contact-heading">
+        <p id="form-status" class="form-status" role="status" aria-live="polite" hidden></p>
+
+        <p class="form-group">
+          <label for="contact-name" class="form-label">Full Name <span class="required-indicator" aria-hidden="true">*</span></label>
+          <input id="contact-name" name="name" type="text" class="form-input" required autocomplete="name" placeholder="Your Name" aria-describedby="name-error">
+          <span id="name-error" class="field-error" aria-live="polite"></span>
+        </p>
+
+        <p class="form-group">
+          <label for="contact-email" class="form-label">Email Address <span class="required-indicator" aria-hidden="true">*</span></label>
+          <input id="contact-email" name="email" type="email" class="form-input" required autocomplete="email" placeholder="student@uit.edu.vn" aria-describedby="email-error">
+          <span id="email-error" class="field-error" aria-live="polite"></span>
+        </p>
+
+        <p class="form-group">
+          <label for="contact-subject" class="form-label">Subject</label>
+          <input id="contact-subject" name="subject" type="text" class="form-input" placeholder="Project or Academic Inquiry">
+        </p>
+
+        <p class="form-group">
+          <label for="contact-message" class="form-label">Message <span class="required-indicator" aria-hidden="true">*</span></label>
+          <textarea id="contact-message" name="message" class="form-textarea" rows="4" required placeholder="Write your message here..." aria-describedby="message-error"></textarea>
+          <span id="message-error" class="field-error" aria-live="polite"></span>
+        </p>
+
+        <button id="form-submit-btn" type="submit" class="submit-btn">
+          <span class="btn-text">Send Message</span>
+        </button>
+      </form>
+    </section>
   </main>
 
+  <!-- Footer Landmark -->
   <footer role="contentinfo" class="site-footer">
     <p class="footer-text">&copy; 2026 Tran Huu Thang. Built with semantic HTML & modern CSS Grid.</p>
   </footer>
