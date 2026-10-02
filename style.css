@@ -104,6 +104,7 @@
 html {
   -webkit-text-size-adjust: 100%;
   scroll-behavior: smooth;
+  overflow-x: hidden;
 }
 
 body {
@@ -115,6 +116,7 @@ body {
   line-height: var(--line-height-base);
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
 }
 
 /* Media element reset */
@@ -194,4 +196,171 @@ textarea {
   top: var(--space-md);
   outline: 2px solid var(--color-focus);
   outline-offset: 2px;
+}
+
+/* ==========================================================================
+   4. 2D RESPONSIVE GRID LAYOUT (SUB-TASK T-02B)
+   ========================================================================== */
+
+/* Page-level Shell 2D Grid */
+body {
+  display: grid;
+  grid-template-rows: auto auto 1fr auto;
+  gap: var(--space-lg);
+  max-width: 1200px;
+  margin-inline: auto;
+  padding: var(--space-md);
+}
+
+/* Header Landmark */
+.site-header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2xs);
+  padding: var(--space-md) var(--space-lg);
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+}
+
+.site-title {
+  font-size: var(--font-size-2xl);
+  letter-spacing: -0.02em;
+}
+
+.site-tagline {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+}
+
+/* Navigation Landmark */
+.site-nav {
+  padding: var(--space-sm) var(--space-md);
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+}
+
+.nav-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-md);
+  align-items: center;
+}
+
+.nav-link {
+  display: inline-block;
+  padding: var(--space-xs) var(--space-sm);
+  font-weight: 600;
+  color: var(--color-text);
+  border-radius: var(--radius-sm);
+  transition: background-color var(--transition-fast), color var(--transition-fast);
+}
+
+.nav-link:hover,
+.nav-link:focus-visible {
+  color: var(--color-primary);
+  background-color: var(--color-surface-hover);
+  text-decoration: none;
+}
+
+/* 2D Main Grid Layout */
+.main-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-xl);
+  width: 100%;
+}
+
+@media (min-width: 840px) {
+  .main-layout {
+    grid-template-columns: minmax(280px, 1fr) minmax(0, 2fr);
+    align-items: start;
+  }
+}
+
+/* Content Sections */
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  padding: var(--space-lg);
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+}
+
+.section-title {
+  font-size: var(--font-size-xl);
+  padding-bottom: var(--space-xs);
+  border-bottom: 2px solid var(--color-border);
+}
+
+.section-text {
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-base);
+}
+
+/* 2D Projects Card Grid */
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: var(--space-md);
+  width: 100%;
+}
+
+.project-item {
+  display: flex;
+}
+
+.project-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: var(--space-sm);
+  width: 100%;
+  padding: var(--space-md);
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  transition: transform var(--transition-fast), border-color var(--transition-fast);
+}
+
+.project-card:hover {
+  border-color: var(--color-primary);
+  background-color: var(--color-surface-hover);
+}
+
+.card-title {
+  font-size: var(--font-size-lg);
+  color: var(--color-text);
+}
+
+.card-desc {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+  flex-grow: 1;
+}
+
+.project-link {
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  color: var(--color-primary);
+  align-self: flex-start;
+}
+
+/* Footer Landmark */
+.site-footer {
+  padding: var(--space-md);
+  text-align: center;
+  border-top: 1px solid var(--color-border);
+}
+
+.footer-text {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
 }

@@ -13,7 +13,7 @@
 |---------|-----------------------|-------------|--------|-------------|
 | **T-01** | HTML Semantic Architecture | Semantic Landmark Tree & Accessible Skip-Link | **Completed** | 0 `<div>` tags, 0 CSS |
 | **T-02A** | Design Tokens & Reset | CSS Variables (:root, dark) & Modern Reset | **Completed** | Zero hardcoded hex in rules, No JS, Commit: `feat(css): tokens & reset` |
-| **T-02B** | 2D Grid Layout | Responsive 2D Grid Layout (Desktop & 375px Mobile) | Pending | Zero horizontal scroll, No JS, Commit: `feat(css): responsive grid` |
+| **T-02B** | 2D Grid Layout | Responsive 2D Grid Layout (Desktop & 375px Mobile) | **Completed** | Zero horizontal scroll, No JS, Commit: `feat(css): responsive grid` |
 | **T-02C** | Theme Engine | Dark Mode Toggle, LocalStorage Persistence | Pending | Strict `localStorage` key `'theme'`, Zero CLS, Commit: `feat(js): dark mode engine` |
 
 ---
@@ -23,9 +23,9 @@
 ### 1. Monolithic Dump Ban (Zero Penalty Policy)
 - Commits combining CSS & JS in 1 shot = **0 pts**.
 - Pipeline must strictly execute atomic commits:
-  1. `feat(css): tokens & reset`
-  2. `feat(css): responsive grid`
-  3. `feat(js): dark mode engine`
+  1. `feat(css): tokens & reset` (Done)
+  2. `feat(css): responsive grid` (Done)
+  3. `feat(js): dark mode engine` (Pending)
 
 ### 2. Design Tokens & Color Pairing Contract
 - **Rule:** Zero hardcoded hex codes in CSS selector rules.
@@ -40,7 +40,7 @@
 - **3-Minute Live Defense Guarantee:** If instructor modifies any token in `:root` / `[data-theme="dark"]`, the UI instantly adapts without any broken overrides.
 
 ### 3. Responsive & Accessibility Contract
-- **Mobile Guarantee:** Flawless rendering at 375px viewport with zero horizontal scroll (`overflow-x: hidden`, flexible grid items).
+- **Mobile Guarantee:** Flawless rendering at 375px viewport with zero horizontal scroll (`overflow-x: hidden`, flexible grid items with `minmax(0, 1fr)`).
 - **Keyboard Navigation:** Full Tab and Enter focus flow with accessible `:focus-visible` indicators.
 - **Skip Link:** Visually hidden until keyboard focus, jumps directly to main landmark.
 
@@ -51,8 +51,9 @@
 
 ---
 
-## Milestone T-02A: Tokens & Reset (Completed)
-- Created `style.css` containing `:root` tokens, `[data-theme="dark"]` tokens, and modern reset.
-- Linked `style.css` in `index.html`.
+## Milestone T-02B: 2D Grid Layout (Completed)
+- Implemented 2D Grid Shell on `body` and 2D responsive grid for `<main>` and `.projects-grid`.
+- Verified 375px mobile responsiveness with zero horizontal overflow.
+- Maintained strict 0 `<div>` tags in `index.html` using purely semantic landmark tags.
 - Verified 0 JS files present in this commit.
 - Verified 0 hardcoded hex codes in CSS styling rules.

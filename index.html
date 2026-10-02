@@ -11,24 +11,57 @@
   <a href="#main-content" class="skip-link">
     Skip to main content
   </a>
-  <header role="banner">
-    <h1>Jane Doe, Lead Engineer</h1>
+
+  <header role="banner" class="site-header">
+    <h1 class="site-title">Jane Doe, Lead Engineer</h1>
+    <p class="site-tagline">Resilient Systems & Accessible Architecture</p>
   </header>
-  <nav role="navigation" aria-label="Primary">
-    <ul>
-      <li><a href="#about">About</a></li>
-      <li><a href="#projects">Projects</a></li>
+
+  <nav role="navigation" aria-label="Primary" class="site-nav">
+    <ul class="nav-list">
+      <li class="nav-item"><a href="#about" class="nav-link">About</a></li>
+      <li class="nav-item"><a href="#projects" class="nav-link">Projects</a></li>
     </ul>
   </nav>
-  <main id="main-content" role="main">
-    <section id="about">
-      <h2>About</h2>
-      <p>Lead Engineer with expertise in building scalable, accessible, and high-performance web systems.</p>
+
+  <main id="main-content" role="main" class="main-layout">
+    <section id="about" class="section about-section" aria-labelledby="about-heading">
+      <h2 id="about-heading" class="section-title">About Me</h2>
+      <p class="section-text">
+        Lead Engineer specializing in scalable distributed architectures, web accessibility, and resilient front-end engineering. Passionate about zero-CLS rendering and design token systems.
+      </p>
     </section>
-    <section id="projects">
-      <h2>Projects</h2>
-      <p>Featured software engineering projects, system architecture designs, and open-source contributions.</p>
+
+    <section id="projects" class="section projects-section" aria-labelledby="projects-heading">
+      <h2 id="projects-heading" class="section-title">Featured Projects</h2>
+      <ul class="projects-grid">
+        <li class="project-item">
+          <article class="project-card">
+            <h3 class="card-title">Token Theming Engine</h3>
+            <p class="card-desc">Zero-runtime CSS custom properties engine delivering WCAG 2.2 AA contrast compliance and persistent states.</p>
+            <a href="#projects" class="project-link">Learn More &rarr;</a>
+          </article>
+        </li>
+        <li class="project-item">
+          <article class="project-card">
+            <h3 class="card-title">Responsive 2D Grid Shell</h3>
+            <p class="card-desc">Intrinsic grid architecture adapting seamlessly from 375px mobile viewports to ultra-wide displays without horizontal shift.</p>
+            <a href="#projects" class="project-link">Learn More &rarr;</a>
+          </article>
+        </li>
+        <li class="project-item">
+          <article class="project-card">
+            <h3 class="card-title">Accessible Landmark Core</h3>
+            <p class="card-desc">Strict semantic HTML5 landmark tree compliant with screen-reader assistive navigation standards.</p>
+            <a href="#projects" class="project-link">Learn More &rarr;</a>
+          </article>
+        </li>
+      </ul>
     </section>
   </main>
+
+  <footer role="contentinfo" class="site-footer">
+    <p class="footer-text">&copy; 2026 Jane Doe. Built with semantic HTML & modern CSS Grid.</p>
+  </footer>
 </body>
 </html>
