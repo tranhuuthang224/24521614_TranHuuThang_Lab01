@@ -1,0 +1,197 @@
+/* ==========================================================================
+   DESIGN TOKENS & RESET (SUB-TASK T-02A)
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. Design Tokens (:root for Light Theme & defaults)
+   -------------------------------------------------------------------------- */
+:root {
+  /* Color Palette - Light Theme */
+  --color-bg: #f8fafc;
+  --color-surface: #ffffff;
+  --color-surface-hover: #f1f5f9;
+  --color-text: #0f172a;
+  --color-text-muted: #334155;
+  --color-primary: #1d4ed8;
+  --color-primary-hover: #1e40af;
+  --color-border: #cbd5e1;
+  --color-focus: #2563eb;
+  --color-skip-bg: #0f172a;
+  --color-skip-text: #ffffff;
+
+  /* Typography */
+  --font-family-base: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  --font-size-xs: 0.75rem;
+  --font-size-sm: 0.875rem;
+  --font-size-base: 1rem;
+  --font-size-lg: 1.125rem;
+  --font-size-xl: 1.25rem;
+  --font-size-2xl: 1.75rem;
+  --font-size-3xl: 2.25rem;
+  --line-height-tight: 1.2;
+  --line-height-base: 1.6;
+
+  /* Spacing Scale */
+  --space-2xs: 0.25rem;
+  --space-xs: 0.5rem;
+  --space-sm: 0.75rem;
+  --space-md: 1rem;
+  --space-lg: 1.5rem;
+  --space-xl: 2rem;
+  --space-2xl: 3rem;
+
+  /* Elevation & Borders */
+  --radius-sm: 0.25rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+
+  /* Motion */
+  --transition-fast: 150ms ease-in-out;
+  --transition-normal: 250ms ease-in-out;
+}
+
+/* --------------------------------------------------------------------------
+   2. Dark Theme Tokens
+   -------------------------------------------------------------------------- */
+[data-theme="dark"] {
+  --color-bg: #0a0f1d;
+  --color-surface: #131b2e;
+  --color-surface-hover: #1e293b;
+  --color-text: #f8fafc;
+  --color-text-muted: #94a3b8;
+  --color-primary: #60a5fa;
+  --color-primary-hover: #93c5fd;
+  --color-border: #334155;
+  --color-focus: #60a5fa;
+  --color-skip-bg: #f8fafc;
+  --color-skip-text: #0a0f1d;
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.5), 0 2px 4px -2px rgba(0, 0, 0, 0.5);
+}
+
+/* Fallback for OS-level dark preference before JS theme engine runs */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --color-bg: #0a0f1d;
+    --color-surface: #131b2e;
+    --color-surface-hover: #1e293b;
+    --color-text: #f8fafc;
+    --color-text-muted: #94a3b8;
+    --color-primary: #60a5fa;
+    --color-primary-hover: #93c5fd;
+    --color-border: #334155;
+    --color-focus: #60a5fa;
+    --color-skip-bg: #f8fafc;
+    --color-skip-text: #0a0f1d;
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.4);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.5), 0 2px 4px -2px rgba(0, 0, 0, 0.5);
+  }
+}
+
+/* --------------------------------------------------------------------------
+   3. Modern CSS Reset (Zero hardcoded hex codes; strictly CSS variables)
+   -------------------------------------------------------------------------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  min-height: 100vh;
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-base);
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Media element reset */
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+/* Typography elements reset */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: var(--color-text);
+  line-height: var(--line-height-tight);
+  font-weight: 700;
+}
+
+p {
+  color: var(--color-text-muted);
+}
+
+ul,
+ol {
+  list-style: none;
+}
+
+a {
+  color: var(--color-primary);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+a:hover {
+  color: var(--color-primary-hover);
+  text-decoration: underline;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: none;
+}
+
+/* Accessible Global Focus Ring */
+:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 2px;
+}
+
+/* Accessible Skip-Link (Keyboard accessible, hidden until focused) */
+.skip-link {
+  position: absolute;
+  top: -9999px;
+  left: var(--space-md);
+  z-index: 1000;
+  padding: var(--space-xs) var(--space-md);
+  background-color: var(--color-skip-bg);
+  color: var(--color-skip-text);
+  font-weight: 600;
+  text-decoration: none;
+  border-radius: var(--radius-sm);
+}
+
+.skip-link:focus-visible {
+  top: var(--space-md);
+  outline: 2px solid var(--color-focus);
+  outline-offset: 2px;
+}
