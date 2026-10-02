@@ -17,7 +17,7 @@
 | **T-02C** | Theme Engine | Dark Mode Toggle, LocalStorage Persistence | **Completed** | Strict `localStorage` key `'theme'`, Zero CLS, Commit: `feat(js): dark mode engine` |
 | **T-03A** | Modular Markup Architecture | Hero Section, Skills Matrix, Project Cards & Contact Form | **Completed** | 0 `<div>` tags, Explicit portrait dimensions, Commit: `feat(html): modular component architecture` |
 | **T-03B** | Component Styling & Grid | CSS Grid layouts for Skills & Cards, Form Styling | **Completed** | Zero hardcoded hex in rules, No JS, Commit: `feat(css): modular component styling` |
-| **T-03C** | Form State & Validation Engine | Client-side validation, accessible state handling | Pending | Native validation with live regions, Commit: `feat(js): contact form state engine` |
+| **T-03C** | Form State & Validation Engine | Client-side validation, accessible state handling | **Completed** | Native validation with live regions, Commit: `feat(js): contact form state engine` |
 
 ---
 
@@ -45,6 +45,7 @@
 ### 5. Contact Form
 - Native semantic form with `<label>`, `<input>`, `<textarea>`, and validation attributes (`required`, `type="email"`, `autocomplete`).
 - Inline accessible error containers (`aria-describedby`) and live status region (`role="status"`, `aria-live="polite"`).
+- Client-side validation engine in `form.js` managing asynchronous submission state (`Sending...` -> `Success`) and keyboard focus redirection.
 
 ---
 
@@ -52,4 +53,5 @@
 - [x] **Zero Div Tags Gate:** Exactly 0 `<div>` tags in `index.html`.
 - [x] **Explicit Image Dimensions:** Explicit `width="160"` and `height="160"` preventing layout shifts.
 - [x] **Zero Hardcoded Colors in CSS Rules:** 100% of color rules consume `var(--color-*)`.
-- [x] **Strict Separation of Concerns:** Commit T-03B contains only CSS rules and no JavaScript changes.
+- [x] **Client-Side Form State Engine:** Robust accessible validation, live region announcements, zero console errors.
+- [x] **Strict Separation of Concerns:** T-03A, T-03B, T-03C executed via atomic commits.
