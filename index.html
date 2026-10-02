@@ -4,7 +4,18 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Jane Doe, Lead Engineer</title>
+  <!-- Anti-FOUC & Zero-CLS immediate theme initialization -->
+  <script>
+    (function () {
+      try {
+        var s = localStorage.getItem('theme');
+        var m = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+        document.documentElement.setAttribute('data-theme', s || (m ? 'dark' : 'light'));
+      } catch (_) {}
+    })();
+  </script>
   <link rel="stylesheet" href="style.css">
+  <script src="theme.js" defer></script>
 </head>
 <body>
   <!-- ATOMIC MILESTONE T-01: No div tags allowed -->
@@ -13,8 +24,14 @@
   </a>
 
   <header role="banner" class="site-header">
-    <h1 class="site-title">Jane Doe, Lead Engineer</h1>
-    <p class="site-tagline">Resilient Systems & Accessible Architecture</p>
+    <hgroup class="site-branding">
+      <h1 class="site-title">Jane Doe, Lead Engineer</h1>
+      <p class="site-tagline">Resilient Systems & Accessible Architecture</p>
+    </hgroup>
+    <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Switch to dark theme" aria-pressed="false">
+      <span class="theme-toggle-icon" aria-hidden="true">🌙</span>
+      <span class="theme-toggle-text">Dark Mode</span>
+    </button>
   </header>
 
   <nav role="navigation" aria-label="Primary" class="site-nav">
@@ -24,7 +41,7 @@
     </ul>
   </nav>
 
-  <main id="main-content" role="main" class="main-layout">
+  <main id="main-content" role="main">
     <section id="about" class="section about-section" aria-labelledby="about-heading">
       <h2 id="about-heading" class="section-title">About Me</h2>
       <p class="section-text">

@@ -215,13 +215,22 @@ body {
 /* Header Landmark */
 .site-header {
   display: flex;
-  flex-direction: column;
-  gap: var(--space-2xs);
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-md);
   padding: var(--space-md) var(--space-lg);
   background-color: var(--color-surface);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
   box-shadow: var(--shadow-sm);
+}
+
+.site-branding {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2xs);
 }
 
 .site-title {
@@ -232,6 +241,42 @@ body {
 .site-tagline {
   font-size: var(--font-size-sm);
   color: var(--color-text-muted);
+}
+
+/* Theme Toggle Button (SUB-TASK T-02C) */
+.theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  padding: var(--space-xs) var(--space-md);
+  cursor: pointer;
+  background-color: var(--color-surface);
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  transition: background-color var(--transition-fast), border-color var(--transition-fast), color var(--transition-fast);
+}
+
+.theme-toggle:hover {
+  background-color: var(--color-surface-hover);
+  border-color: var(--color-primary);
+}
+
+.theme-toggle:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 2px;
+}
+
+.theme-toggle-icon {
+  font-size: var(--font-size-base);
+  line-height: 1;
+}
+
+.theme-toggle-text {
+  user-select: none;
 }
 
 /* Navigation Landmark */
