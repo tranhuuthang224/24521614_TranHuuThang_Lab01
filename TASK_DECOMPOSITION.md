@@ -16,7 +16,7 @@
 | **T-02B** | 2D Grid Layout | Responsive 2D Grid Layout (Desktop & 375px Mobile) | **Completed** | Zero horizontal scroll, No JS, Commit: `feat(css): responsive grid` |
 | **T-02C** | Theme Engine | Dark Mode Toggle, LocalStorage Persistence | **Completed** | Strict `localStorage` key `'theme'`, Zero CLS, Commit: `feat(js): dark mode engine` |
 | **T-03A** | Modular Markup Architecture | Hero Section, Skills Matrix, Project Cards & Contact Form | **Completed** | 0 `<div>` tags, Explicit portrait dimensions, Commit: `feat(html): modular component architecture` |
-| **T-03B** | Component Styling & Grid | CSS Grid layouts for Skills & Cards, Form Styling | Pending | Zero hardcoded hex in rules, No JS, Commit: `feat(css): modular component styling` |
+| **T-03B** | Component Styling & Grid | CSS Grid layouts for Skills & Cards, Form Styling | **Completed** | Zero hardcoded hex in rules, No JS, Commit: `feat(css): modular component styling` |
 | **T-03C** | Form State & Validation Engine | Client-side validation, accessible state handling | Pending | Native validation with live regions, Commit: `feat(js): contact form state engine` |
 
 ---
@@ -34,7 +34,7 @@
 
 ### 3. Skills Matrix
 - Categorized skill domains (Frontend Engineering, Backend & Databases, Architecture & Tools).
-- Semantic structure using categorized badge lists arranged in CSS Grid.
+- Semantic structure using categorized badge lists arranged in CSS Grid (`.skills-categories-grid`).
 
 ### 4. Project Cards
 - Self-contained `<article class="project-card" data-category="...">` blocks matching contract snippet:
@@ -51,4 +51,5 @@
 ## Quality Gates & Verification Checklist
 - [x] **Zero Div Tags Gate:** Exactly 0 `<div>` tags in `index.html`.
 - [x] **Explicit Image Dimensions:** Explicit `width="160"` and `height="160"` preventing layout shifts.
-- [x] **Strict Separation of Concerns:** Commit T-03A contains only markup and asset changes.
+- [x] **Zero Hardcoded Colors in CSS Rules:** 100% of color rules consume `var(--color-*)`.
+- [x] **Strict Separation of Concerns:** Commit T-03B contains only CSS rules and no JavaScript changes.

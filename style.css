@@ -18,6 +18,10 @@
   --color-focus: #2563eb;
   --color-skip-bg: #0f172a;
   --color-skip-text: #ffffff;
+  --color-success: #15803d;
+  --color-success-bg: #f0fdf4;
+  --color-error: #b91c1c;
+  --color-error-bg: #fef2f2;
 
   /* Typography */
   --font-family-base: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
@@ -67,6 +71,10 @@
   --color-focus: #60a5fa;
   --color-skip-bg: #f8fafc;
   --color-skip-text: #0a0f1d;
+  --color-success: #4ade80;
+  --color-success-bg: #052e16;
+  --color-error: #f87171;
+  --color-error-bg: #450a0a;
   --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.4);
   --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.5), 0 2px 4px -2px rgba(0, 0, 0, 0.5);
 }
@@ -85,6 +93,10 @@
     --color-focus: #60a5fa;
     --color-skip-bg: #f8fafc;
     --color-skip-text: #0a0f1d;
+    --color-success: #4ade80;
+    --color-success-bg: #052e16;
+    --color-error: #f87171;
+    --color-error-bg: #450a0a;
     --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.4);
     --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.5), 0 2px 4px -2px rgba(0, 0, 0, 0.5);
   }
@@ -199,7 +211,7 @@ textarea {
 }
 
 /* ==========================================================================
-   4. 2D RESPONSIVE GRID LAYOUT (SUB-TASK T-02B)
+   4. 2D RESPONSIVE GRID LAYOUT & SHELL (SUB-TASK T-02B)
    ========================================================================== */
 
 /* Page-level Shell 2D Grid */
@@ -243,7 +255,7 @@ body {
   color: var(--color-text-muted);
 }
 
-/* Theme Toggle Button (SUB-TASK T-02C) */
+/* Theme Toggle Button (Accessible Theme Switcher) */
 .theme-toggle {
   display: inline-flex;
   align-items: center;
@@ -311,22 +323,15 @@ body {
   text-decoration: none;
 }
 
-/* 2D Main Grid Layout */
+/* Main Landmark Layout */
 .main-layout {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr);
+  display: flex;
+  flex-direction: column;
   gap: var(--space-xl);
   width: 100%;
 }
 
-@media (min-width: 840px) {
-  .main-layout {
-    grid-template-columns: minmax(280px, 1fr) minmax(0, 2fr);
-    align-items: start;
-  }
-}
-
-/* Content Sections */
+/* Section Common Container */
 .section {
   display: flex;
   flex-direction: column;
@@ -349,10 +354,148 @@ body {
   line-height: var(--line-height-base);
 }
 
-/* 2D Projects Card Grid */
+/* ==========================================================================
+   5. MODULAR COMPONENT ARCHITECTURE (SUB-TASK T-03B)
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   Hero Section Component
+   -------------------------------------------------------------------------- */
+.hero-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: var(--space-md);
+}
+
+@media (min-width: 768px) {
+  .hero-section {
+    display: grid;
+    grid-template-columns: 160px minmax(0, 1fr);
+    grid-template-rows: auto auto;
+    align-items: center;
+    text-align: left;
+    gap: var(--space-md) var(--space-xl);
+  }
+
+  .hero-portrait {
+    grid-row: 1 / 3;
+    grid-column: 1 / 2;
+  }
+
+  .hero-text-group {
+    grid-column: 2 / 3;
+    grid-row: 1 / 2;
+  }
+
+  .hero-pitch {
+    grid-column: 2 / 3;
+    grid-row: 2 / 3;
+  }
+}
+
+.hero-portrait {
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  border: 3px solid var(--color-primary);
+  box-shadow: var(--shadow-md);
+  flex-shrink: 0;
+}
+
+.hero-text-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2xs);
+}
+
+.hero-title {
+  font-size: var(--font-size-2xl);
+  letter-spacing: -0.02em;
+}
+
+.hero-subtitle {
+  font-size: var(--font-size-base);
+  font-weight: 600;
+  color: var(--color-primary);
+}
+
+.hero-pitch {
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-base);
+  color: var(--color-text-muted);
+}
+
+/* --------------------------------------------------------------------------
+   Skills Matrix Component (Categorized Badges arranged in CSS Grid)
+   -------------------------------------------------------------------------- */
+.skills-categories-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: var(--space-md);
+  width: 100%;
+}
+
+.skills-category-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  padding: var(--space-md);
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+}
+
+.category-title {
+  font-size: var(--font-size-lg);
+  color: var(--color-text);
+  padding-bottom: var(--space-2xs);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.badge-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: var(--space-2xs) var(--space-sm);
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-border);
+  background-color: var(--color-surface-hover);
+  color: var(--color-text);
+  transition: border-color var(--transition-fast), color var(--transition-fast);
+}
+
+.badge[data-category="frontend"] {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+
+.badge[data-category="backend"] {
+  border-color: var(--color-border);
+  color: var(--color-text);
+}
+
+.badge[data-category="tools"],
+.badge[data-category="accessibility"] {
+  border-color: var(--color-border);
+  color: var(--color-text-muted);
+}
+
+/* --------------------------------------------------------------------------
+   Project Cards Component (Self-contained <article> blocks with header/footer)
+   -------------------------------------------------------------------------- */
 .projects-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
   gap: var(--space-md);
   width: 100%;
 }
@@ -380,9 +523,18 @@ body {
   background-color: var(--color-surface-hover);
 }
 
-.card-title {
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: var(--space-xs);
+  flex-wrap: wrap;
+}
+
+.card-header .card-title {
   font-size: var(--font-size-lg);
   color: var(--color-text);
+  flex: 1 1 auto;
 }
 
 .card-desc {
@@ -391,14 +543,137 @@ body {
   flex-grow: 1;
 }
 
+.card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding-top: var(--space-xs);
+  border-top: 1px solid var(--color-border);
+}
+
 .project-link {
   font-size: var(--font-size-sm);
   font-weight: 600;
   color: var(--color-primary);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2xs);
+}
+
+.project-link:hover,
+.project-link:focus-visible {
+  color: var(--color-primary-hover);
+}
+
+/* --------------------------------------------------------------------------
+   Contact Form Component
+   -------------------------------------------------------------------------- */
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  max-width: 640px;
+  width: 100%;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2xs);
+}
+
+.form-label {
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.required-indicator {
+  color: var(--color-primary);
+}
+
+.form-input,
+.form-textarea {
+  padding: var(--space-xs) var(--space-sm);
+  font-size: var(--font-size-base);
+  color: var(--color-text);
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  transition: border-color var(--transition-fast);
+  width: 100%;
+}
+
+.form-input:focus-visible,
+.form-textarea:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 1px;
+  border-color: var(--color-focus);
+}
+
+.form-input[aria-invalid="true"],
+.form-textarea[aria-invalid="true"] {
+  border-color: var(--color-error);
+}
+
+.field-error {
+  font-size: var(--font-size-xs);
+  color: var(--color-error);
+  min-height: 1.25rem;
+}
+
+.form-status {
+  padding: var(--space-sm) var(--space-md);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-border);
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+}
+
+.form-status[data-state="success"] {
+  background-color: var(--color-success-bg);
+  color: var(--color-success);
+  border-color: var(--color-success);
+}
+
+.form-status[data-state="error"] {
+  background-color: var(--color-error-bg);
+  color: var(--color-error);
+  border-color: var(--color-error);
+}
+
+.submit-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-xs) var(--space-lg);
+  background-color: var(--color-primary);
+  color: var(--color-skip-text);
+  font-weight: 600;
+  font-size: var(--font-size-base);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: background-color var(--transition-fast);
   align-self: flex-start;
 }
 
-/* Footer Landmark */
+.submit-btn:hover {
+  background-color: var(--color-primary-hover);
+}
+
+.submit-btn:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 2px;
+}
+
+.submit-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* --------------------------------------------------------------------------
+   Footer Landmark
+   -------------------------------------------------------------------------- */
 .site-footer {
   padding: var(--space-md);
   text-align: center;
