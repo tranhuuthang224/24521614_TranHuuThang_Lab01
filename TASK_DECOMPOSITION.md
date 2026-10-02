@@ -21,7 +21,7 @@
 | **T-04A** | Loading Skeleton | Pure CSS Shimmer Gradient Skeleton | **Completed** | Pure CSS gradient shimmer animation, Commit: `feat(css): skeleton` |
 | **T-04B** | Live Data State | Flexbox Metadata Badges & Grid List | **Completed** | Flexbox badges + Grid list, Commit: `feat(css): live data state` |
 | **T-04C** | Empty & Error States | Accessible Empty & Error states with Retry trigger | **Completed** | `role="alert"`, retry button, Commit: `feat(components): empty & error states` |
-| **T-04D** | 4-State Machine Engine | Finite State Machine (FSM) client engine | Pending | Event-driven transitions, Commit: `feat(js): 4-state resilient state machine` |
+| **T-04D** | 4-State Machine Engine | Finite State Machine (FSM) client engine | **Completed** | Event-driven transitions, Commit: `feat(js): 4-state resilient state machine` |
 
 ---
 
@@ -76,5 +76,12 @@
 - Implemented accessible `.empty-state` with guidance messaging and action trigger button.
 - Implemented accessible `.error-state` with `role="alert"` and accessible retry trigger `<button class="retry-btn">`.
 - Verified contrast ratios and responsive wrapping without horizontal overflow.
+
+## Milestone T-04D: 4-State Resilient State Machine Engine (Completed)
+- Implemented finite state machine in `state-machine.js` coordinating all 4 states (`LOADING`, `SUCCESS`, `EMPTY`, `ERROR`).
+- Connected accessible retry trigger to re-initiate fetch workflow (`ERROR` -> `LOADING` -> `SUCCESS`).
+- Added live state inspection controls enabling instant live defense testing of all 4 states.
+- Verified 0 `<div>` tags in `index.html` and zero console errors.
+
 
 
