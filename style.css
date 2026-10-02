@@ -782,4 +782,84 @@ body {
   color: var(--color-text-muted);
 }
 
+/* --------------------------------------------------------------------------
+   SUB-TASK T-04C: Empty & Error States with Accessible Retry Trigger
+   -------------------------------------------------------------------------- */
+.empty-state,
+.error-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: var(--space-2xl) var(--space-lg);
+  border: 1px dashed var(--color-border);
+  border-radius: var(--radius-md);
+  background-color: var(--color-surface);
+  gap: var(--space-sm);
+  width: 100%;
+}
+
+.error-state {
+  border-color: var(--color-error);
+  border-style: solid;
+}
+
+.state-icon {
+  font-size: var(--font-size-3xl);
+  line-height: 1;
+}
+
+.state-icon.error-icon {
+  color: var(--color-error);
+}
+
+.state-title {
+  font-size: var(--font-size-xl);
+  color: var(--color-text);
+}
+
+.state-desc {
+  max-width: 440px;
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+  line-height: var(--line-height-base);
+}
+
+.retry-btn,
+.state-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  padding: var(--space-xs) var(--space-md);
+  border-radius: var(--radius-sm);
+  font-weight: 600;
+  font-size: var(--font-size-sm);
+  cursor: pointer;
+  transition: background-color var(--transition-fast);
+  background-color: var(--color-primary);
+  color: var(--color-skip-text);
+}
+
+.state-btn {
+  background-color: var(--color-surface-hover);
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
+}
+
+.state-btn:hover {
+  background-color: var(--color-border);
+}
+
+.retry-btn:hover {
+  background-color: var(--color-primary-hover);
+}
+
+.retry-btn:focus-visible,
+.state-btn:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 2px;
+}
+
+
 

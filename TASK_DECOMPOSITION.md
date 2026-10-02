@@ -20,7 +20,7 @@
 | **T-03C** | Form State & Validation Engine | Client-side validation, accessible state handling | **Completed** | Native validation with live regions |
 | **T-04A** | Loading Skeleton | Pure CSS Shimmer Gradient Skeleton | **Completed** | Pure CSS gradient shimmer animation, Commit: `feat(css): skeleton` |
 | **T-04B** | Live Data State | Flexbox Metadata Badges & Grid List | **Completed** | Flexbox badges + Grid list, Commit: `feat(css): live data state` |
-| **T-04C** | Empty & Error States | Accessible Empty & Error states with Retry trigger | Pending | `role="alert"`, retry button, Commit: `feat(components): empty & error states` |
+| **T-04C** | Empty & Error States | Accessible Empty & Error states with Retry trigger | **Completed** | `role="alert"`, retry button, Commit: `feat(components): empty & error states` |
 | **T-04D** | 4-State Machine Engine | Finite State Machine (FSM) client engine | Pending | Event-driven transitions, Commit: `feat(js): 4-state resilient state machine` |
 
 ---
@@ -71,4 +71,10 @@
 - Rendered live project data items inside responsive CSS Grid `.projects-grid`.
 - Integrated flexbox metadata badges (`.metadata-badge`, `.card-stats`) for repository stars, version badges, and categories.
 - Verified 0 `<div>` elements and responsive layout at 375px mobile.
+
+## Milestone T-04C: Empty & Error States (Completed)
+- Implemented accessible `.empty-state` with guidance messaging and action trigger button.
+- Implemented accessible `.error-state` with `role="alert"` and accessible retry trigger `<button class="retry-btn">`.
+- Verified contrast ratios and responsive wrapping without horizontal overflow.
+
 
