@@ -25,7 +25,7 @@
 | **HW1-M1** | WCAG 2.2 AA Audit | Contrast ratios, landmark accessible names, heading hierarchy | **Completed** | ≥ 4.5:1 contrast, all landmarks labeled, Commit: `fix(a11y): contrast & landmarks` |
 | **HW1-M2** | Focus Trap Audit | Keyboard Tab & Enter flow, skip-link, no focus traps | **Completed** | Linear Tab order, skip-link targets `#main-content`, Commit: `fix(nav): keyboard trap prevention` |
 | **HW1-M3** | Strict CSP & Zero Inline Handlers | Content Security Policy, externalize inline scripts | **Completed** | Zero `onclick=`, strict CSP meta tag, Commit: `fix(security): strict CSP policy` |
-| **HW1-M4** | Lighthouse 100 Audit | Performance, SEO, Best Practices, Accessibility optimization | **Planned** | LCP < 2.0s, meta description, favicon, Commit: `perf: optimize assets` |
+| **HW1-M4** | Lighthouse 100 Audit | Performance, SEO, Best Practices, Accessibility optimization | **Completed** | LCP < 2.0s, meta description, favicon, Commit: `perf: optimize assets` |
 
 ---
 
