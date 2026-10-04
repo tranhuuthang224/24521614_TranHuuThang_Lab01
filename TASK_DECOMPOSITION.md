@@ -23,7 +23,7 @@
 | **T-04C** | Empty & Error States | Accessible Empty & Error states with Retry trigger | **Completed** | `role="alert"`, retry button, Commit: `feat(components): empty & error states` |
 | **T-04D** | 4-State Machine Engine | Finite State Machine (FSM) client engine | **Completed** | Event-driven transitions, Commit: `feat(js): 4-state resilient state machine` |
 | **HW1-M1** | WCAG 2.2 AA Audit | Contrast ratios, landmark accessible names, heading hierarchy | **Completed** | ≥ 4.5:1 contrast, all landmarks labeled, Commit: `fix(a11y): contrast & landmarks` |
-| **HW1-M2** | Focus Trap Audit | Keyboard Tab & Enter flow, skip-link, no focus traps | **Planned** | Linear Tab order, skip-link targets `#main-content`, Commit: `fix(nav): keyboard trap prevention` |
+| **HW1-M2** | Focus Trap Audit | Keyboard Tab & Enter flow, skip-link, no focus traps | **Completed** | Linear Tab order, skip-link targets `#main-content`, Commit: `fix(nav): keyboard trap prevention` |
 | **HW1-M3** | Strict CSP & Zero Inline Handlers | Content Security Policy, externalize inline scripts | **Planned** | Zero `onclick=`, strict CSP meta tag, Commit: `fix(security): strict CSP policy` |
 | **HW1-M4** | Lighthouse 100 Audit | Performance, SEO, Best Practices, Accessibility optimization | **Planned** | LCP < 2.0s, meta description, favicon, Commit: `perf: optimize assets` |
 

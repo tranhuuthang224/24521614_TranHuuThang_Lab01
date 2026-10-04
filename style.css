@@ -216,6 +216,11 @@ textarea {
   outline-offset: 2px;
 }
 
+/* Skip-link target: suppress focus ring on non-interactive container */
+#main-content:focus {
+  outline: none;
+}
+
 /* ==========================================================================
    4. 2D RESPONSIVE GRID LAYOUT & SHELL (SUB-TASK T-02B)
    ========================================================================== */
@@ -901,6 +906,11 @@ body {
   background-color: var(--color-primary);
   color: var(--color-skip-text);
   border-color: var(--color-primary);
+}
+
+.state-switch-btn:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 2px;
 }
 
 
