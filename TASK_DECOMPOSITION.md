@@ -22,6 +22,10 @@
 | **T-04B** | Live Data State | Flexbox Metadata Badges & Grid List | **Completed** | Flexbox badges + Grid list, Commit: `feat(css): live data state` |
 | **T-04C** | Empty & Error States | Accessible Empty & Error states with Retry trigger | **Completed** | `role="alert"`, retry button, Commit: `feat(components): empty & error states` |
 | **T-04D** | 4-State Machine Engine | Finite State Machine (FSM) client engine | **Completed** | Event-driven transitions, Commit: `feat(js): 4-state resilient state machine` |
+| **HW1-M1** | WCAG 2.2 AA Audit | Contrast ratios, landmark accessible names, heading hierarchy | **Completed** | ≥ 4.5:1 contrast, all landmarks labeled, Commit: `fix(a11y): contrast & landmarks` |
+| **HW1-M2** | Focus Trap Audit | Keyboard Tab & Enter flow, skip-link, no focus traps | **Planned** | Linear Tab order, skip-link targets `#main-content`, Commit: `fix(nav): keyboard trap prevention` |
+| **HW1-M3** | Strict CSP & Zero Inline Handlers | Content Security Policy, externalize inline scripts | **Planned** | Zero `onclick=`, strict CSP meta tag, Commit: `fix(security): strict CSP policy` |
+| **HW1-M4** | Lighthouse 100 Audit | Performance, SEO, Best Practices, Accessibility optimization | **Planned** | LCP < 2.0s, meta description, favicon, Commit: `perf: optimize assets` |
 
 ---
 
@@ -82,6 +86,45 @@
 - Connected accessible retry trigger to re-initiate fetch workflow (`ERROR` -> `LOADING` -> `SUCCESS`).
 - Added live state inspection controls enabling instant live defense testing of all 4 states.
 - Verified 0 `<div>` tags in `index.html` and zero console errors.
+
+
+---
+
+## HW1: Production Portfolio (Min 4 Commits)
+
+### Acceptance Criteria
+- Monolithic PRs or one-shot AI code = 0 pts for architecture.
+- Min 4 atomic commits, each isolated to its concern.
+- WCAG 2.2 AA compliant across all themes.
+- Full keyboard navigation support (Tab & Enter).
+- Zero console errors during dynamic theme toggling.
+- Strict Content Security Policy enforced.
+
+### Milestone HW1-M1: WCAG 2.2 AA Audit
+- Verify all contrast ratios ≥ 4.5:1 for normal text, ≥ 3:1 for large text.
+- Ensure all landmarks (`<header>`, `<nav>`, `<main>`, `<footer>`) have accessible names.
+- Validate heading hierarchy (h1 → h2 → h3) is logical and complete.
+- Ensure all interactive elements have accessible labels.
+- Add missing `aria-labelledby` where required.
+
+### Milestone HW1-M2: Focus Trap Audit
+- Verify linear Tab order: skip-link → theme toggle → nav → hero → skills → projects → state controls → contact form → footer.
+- Ensure skip-link correctly focuses `#main-content` via `tabindex="-1"`.
+- Confirm no keyboard traps in any interactive component.
+- Validate Enter key activates all interactive elements.
+
+### Milestone HW1-M3: Strict CSP & Zero Inline Handlers
+- Externalize inline `<script>` in `<head>` (anti-FOUC) to separate JS file.
+- Add `<meta http-equiv="Content-Security-Policy">` with strict directives.
+- Verify zero `onclick=`, `onload=`, or other inline event handler attributes.
+- All event binding strictly via `addEventListener()` in external JS files.
+
+### Milestone HW1-M4: Lighthouse 100 Audit Score
+- Add `<meta name="description">` for SEO.
+- Add `<link rel="icon">` favicon.
+- Ensure all images have explicit `width` and `height` dimensions.
+- Verify LCP element loads efficiently (< 2.0s on Fast 3G).
+- Optimize asset loading order and render-blocking resources.
 
 
 
