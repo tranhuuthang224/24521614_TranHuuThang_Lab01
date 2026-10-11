@@ -152,8 +152,19 @@
     }
   }
 
+  // Submission Guard instance for double-submit prevention
+  let submissionGuard = null;
+
+  function getSubmissionGuard() {
+    if (!submissionGuard && window.SecurityEngine && typeof window.SecurityEngine.createSubmissionGuard === 'function') {
+      submissionGuard = window.SecurityEngine.createSubmissionGuard();
+    }
+    return submissionGuard;
+  }
+
   /**
    * Renders SUCCESS State: Displays safe attendee confirmation badge and reset option.
+   * Guarantees ZERO innerHTML vulnerability by using textContent and safe text nodes.
    */
   function applySuccessState(payload) {
     if (formEl) formEl.setAttribute('aria-busy', 'false');
@@ -173,21 +184,49 @@
       feedbackEl.className = 'form-feedback feedback-success';
       feedbackEl.setAttribute('role', 'status');
 
-      // Clear previous content
+      // Clear previous content safely
       feedbackEl.textContent = '';
 
       // Create safe semantic DOM structure (ZERO innerHTML injection)
       const titleStrong = document.createElement('strong');
       titleStrong.textContent = 'Registration Confirmed: ';
 
+      const rawName = payload && payload.name ? payload.name : 'Attendee';
+      const rawTrack = payload && payload.track ? payload.track : 'Cloud Architecture';
+      const rawEmail = payload && payload.email ? payload.email : 'your email';
+      const rawNotes = payload && payload.notes ? payload.notes : '';
+
+      // Sanitize through SecurityEngine utility if present
+      const safeName = window.SecurityEngine ? window.SecurityEngine.sanitize(rawName) : rawName;
+      const safeTrack = window.SecurityEngine ? window.SecurityEngine.sanitize(rawTrack) : rawTrack;
+      const safeEmail = window.SecurityEngine ? window.SecurityEngine.sanitize(rawEmail) : rawEmail;
+
       const attendeeText = document.createTextNode(
-        `Welcome, ${payload && payload.name ? payload.name : 'Attendee'}! ` +
-        `Your VIP pass for track "${payload && payload.track ? payload.track : 'Cloud Architecture'}" ` +
-        `has been provisioned to ${payload && payload.email ? payload.email : 'your email'}.`
+        `Welcome, ${safeName}! Your VIP pass for track "${safeTrack}" has been provisioned to ${safeEmail}.`
       );
 
       feedbackEl.appendChild(titleStrong);
       feedbackEl.appendChild(attendeeText);
+
+      // If user supplied security notes/payload, render safely as verified text node
+      if (rawNotes) {
+        const notesP = document.createElement('p');
+        notesP.className = 'feedback-notes';
+        notesP.style.marginTop = 'var(--space-xs)';
+        notesP.style.fontSize = 'var(--font-size-xs)';
+
+        const notesLabel = document.createElement('strong');
+        notesLabel.textContent = 'Sanitized Security Payload / Notes: ';
+
+        const notesValue = document.createElement('code');
+        notesValue.className = 'font-mono';
+        // STRICT SAFETY: textContent guarantees any <script> tag is parsed as inert text
+        notesValue.textContent = rawNotes;
+
+        notesP.appendChild(notesLabel);
+        notesP.appendChild(notesValue);
+        feedbackEl.appendChild(notesP);
+      }
     }
   }
 
@@ -196,6 +235,10 @@
    */
   function applyErrorState(payload) {
     if (formEl) formEl.setAttribute('aria-busy', 'false');
+
+    // Release double-submit lock so user can retry
+    const guard = getSubmissionGuard();
+    if (guard) guard.releaseLock();
 
     // Re-enable inputs so user can edit and retry
     setInputDisabled(false);
@@ -231,31 +274,54 @@
    * Simulates asynchronous network submission.
    * Can be injected or mocked in tests.
    */
-  function simulateNetworkRequest(data) {
+  function simulateNetworkRequest(data, signal) {
     return new Promise(function (resolve, reject) {
-      setTimeout(function () {
-        // Simulate random 5% network glitch or trigger error if email contains 'error'
+      const timer = setTimeout(function () {
+        if (signal && signal.aborted) {
+          reject(new DOMException('Aborted', 'AbortError'));
+          return;
+        }
+        // Simulate error if email contains 'error@'
         if (data.email && data.email.includes('error@')) {
           reject(new Error('Simulated gateway timeout (504): Registration server unavailable.'));
         } else {
           resolve({ status: 200, confirmationId: 'VIP-' + Math.random().toString(36).substring(2, 9).toUpperCase() });
         }
       }, 750);
+
+      if (signal) {
+        signal.addEventListener('abort', function () {
+          clearTimeout(timer);
+          reject(new DOMException('Aborted', 'AbortError'));
+        });
+      }
     });
   }
 
   /**
-   * Form submit handler.
+   * Form submit handler with atomic double-submit prevention.
    */
   function handleSubmit(e) {
     e.preventDefault();
 
-    // Guard: Only allow submit from IDLE or ERROR states
-    if (currentState === STATES.SUBMITTING) {
+    // --------------------------------------------------------------------------
+    // SLICE 3: Synchronous Double-Submit Mutex Lock
+    // Must be acquired synchronously on turn 0 of the event loop to stop rapid
+    // double-clicks and Enter-key spam.
+    // --------------------------------------------------------------------------
+    const guard = getSubmissionGuard();
+    if (guard) {
+      const acquired = guard.acquireLock();
+      if (!acquired) {
+        // Double-submit blocked synchronously!
+        return;
+      }
+    } else if (currentState === STATES.SUBMITTING) {
       return;
     }
 
     if (!validateInputs()) {
+      if (guard) guard.releaseLock();
       return;
     }
 
@@ -268,11 +334,14 @@
 
     transitionTo(STATES.SUBMITTING);
 
-    simulateNetworkRequest(attendeeData)
+    const signal = guard ? guard.getSignal() : null;
+
+    simulateNetworkRequest(attendeeData, signal)
       .then(function () {
         transitionTo(STATES.SUCCESS, attendeeData);
       })
       .catch(function (err) {
+        if (err.name === 'AbortError') return;
         transitionTo(STATES.ERROR, { message: err.message });
       });
   }
@@ -281,6 +350,9 @@
    * Reset form handler (Register another attendee).
    */
   function handleReset() {
+    const guard = getSubmissionGuard();
+    if (guard) guard.releaseLock();
+
     if (formEl) formEl.reset();
     transitionTo(STATES.IDLE);
   }
