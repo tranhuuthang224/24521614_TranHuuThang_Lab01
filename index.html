@@ -3,30 +3,27 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Portfolio of Tran Huu Thang, a 3rd-year Information Systems student at UIT (VNU-HCM). Showcasing web development projects, skills, and accessible design.">
+  <meta name="description" content="HW2: Drum Kit Engine with Contract-First Architecture, Polyphonic Audio, Keyboard Throttling, and FIFO Beat Recorder.">
   <meta name="theme-color" content="#1d4ed8">
-  <title>Tran Huu Thang - Portfolio | Information Systems</title>
+  <title>Tran Huu Thang - HW2: Drum Kit Engine | Contract-First</title>
   <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
   <!-- Strict Content Security Policy: no inline scripts/styles -->
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'">
-  <!-- Anti-FOUC & Zero-CLS immediate theme initialization (externalized for CSP) -->
+  <!-- Anti-FOUC & Zero-CLS immediate theme initialization -->
   <script src="anti-fouc.js"></script>
   <link rel="stylesheet" href="style.css">
   <script src="theme.js" defer></script>
-  <script src="form.js" defer></script>
-  <script src="state-machine.js" defer></script>
 </head>
 <body>
-  <!-- ATOMIC MILESTONE T-01: No div tags allowed -->
-  <a href="#main-content" class="skip-link">
-    Skip to main content
-  </a>
+  <!-- Accessible Skip-Link (0 div tags throughout) -->
+  <a href="#main-content" class="skip-link">Skip to main content</a>
 
-  <!-- Header & Accessible Theme Switcher -->
+  <!-- Header & Accessible Theme Switcher Landmark -->
   <header role="banner" class="site-header" aria-label="Site header">
     <hgroup class="site-branding">
-      <h1 class="site-title">Tran Huu Thang</h1>
-      <p class="site-tagline">3rd-Year Information Systems Student | UIT (VNU-HCM)</p>
+      <h1 class="site-title">Drum Kit Engine</h1>
+      <p class="site-tagline">Contract-First Polyphonic Engine &amp; FIFO Beat Sequencer</p>
+      <p class="student-meta">Tran Huu Thang &bull; ID: 24521614 &bull; UIT (VNU-HCM)</p>
     </hgroup>
     <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Switch to dark theme" aria-pressed="false">
       <span class="theme-toggle-icon" aria-hidden="true">🌙</span>
@@ -34,188 +31,164 @@
     </button>
   </header>
 
-  <!-- Primary Navigation Landmark -->
-  <nav role="navigation" aria-label="Primary" class="site-nav">
-    <ul class="nav-list">
-      <li class="nav-item"><a href="#about" class="nav-link">About</a></li>
-      <li class="nav-item"><a href="#skills" class="nav-link">Skills</a></li>
-      <li class="nav-item"><a href="#projects" class="nav-link">Projects</a></li>
-      <li class="nav-item"><a href="#contact" class="nav-link">Contact</a></li>
-    </ul>
-  </nav>
-
   <!-- Main Landmark -->
   <main id="main-content" role="main" class="main-layout" aria-label="Main content" tabindex="-1">
-    <!-- Hero / About Section -->
-    <section id="about" class="section hero-section" aria-labelledby="hero-heading">
-      <img src="assets/portrait.svg" alt="Portrait of Tran Huu Thang" width="160" height="160" class="hero-portrait" loading="eager" decoding="async">
-      <hgroup class="hero-text-group">
-        <h2 id="hero-heading" class="hero-title">About Me</h2>
-        <p class="hero-subtitle">Undergraduate Engineer in Information Systems</p>
-      </hgroup>
-      <p class="hero-pitch">
-        I am a third-year student majoring in Information Systems at the University of Information Technology (UIT - VNU-HCM). I focus on designing robust database architectures and engineering accessible, high-performance web applications with clean, semantic standards.
-      </p>
-    </section>
+    
+    <!-- STEP 1 CONTRACT: Acoustic Drum Pads Matrix -->
+    <section id="drum-kit" class="section drum-kit-section" aria-labelledby="drum-kit-heading">
+      <header class="section-header">
+        <h2 id="drum-kit-heading" class="section-title">Acoustic Drum Pads</h2>
+        <p class="section-description">
+          Press physical keyboard keys or click pads. Mappings are strictly bound via HTML <code>data-key</code> and <code>data-sound</code> contracts.
+        </p>
+      </header>
 
-    <!-- Skills Matrix -->
-    <section id="skills" class="section skills-section" aria-labelledby="skills-heading">
-      <h2 id="skills-heading" class="section-title">Skills Matrix</h2>
-      <ul class="skills-categories-grid">
-        <li class="skills-category-card">
-          <h3 class="category-title">Frontend Engineering</h3>
-          <ul class="badge-list">
-            <li class="badge" data-category="frontend">Semantic HTML5</li>
-            <li class="badge" data-category="frontend">Modern CSS3 &amp; Grid</li>
-            <li class="badge" data-category="frontend">JavaScript (ESNext)</li>
-            <li class="badge" data-category="frontend">React.js</li>
-            <li class="badge" data-category="frontend">WAI-ARIA A11y</li>
-          </ul>
+      <!-- HTML data-sound contract matrix (0 div tags) -->
+      <ul class="pads-grid" aria-label="Drum kit pads list">
+        <li class="pad-item">
+          <button class="drum-pad" type="button" data-key="a" data-code="KeyA" data-sound="clap" aria-label="Play Clap sound (Key A)">
+            <kbd class="key-label">A</kbd>
+            <span class="sound-label">Clap</span>
+          </button>
         </li>
-        <li class="skills-category-card">
-          <h3 class="category-title">Backend &amp; Databases</h3>
-          <ul class="badge-list">
-            <li class="badge" data-category="backend">Node.js</li>
-            <li class="badge" data-category="backend">Express.js</li>
-            <li class="badge" data-category="backend">MySQL</li>
-            <li class="badge" data-category="backend">MongoDB</li>
-            <li class="badge" data-category="backend">RESTful APIs</li>
-          </ul>
+        <li class="pad-item">
+          <button class="drum-pad" type="button" data-key="s" data-code="KeyS" data-sound="hihat" aria-label="Play Hi-Hat sound (Key S)">
+            <kbd class="key-label">S</kbd>
+            <span class="sound-label">Hi-Hat</span>
+          </button>
         </li>
-        <li class="skills-category-card">
-          <h3 class="category-title">Architecture &amp; Tools</h3>
-          <ul class="badge-list">
-            <li class="badge" data-category="tools">Git &amp; GitHub</li>
-            <li class="badge" data-category="tools">WBS &amp; Agile</li>
-            <li class="badge" data-category="tools">Chrome DevTools</li>
-            <li class="badge" data-category="tools">Performance Profiling</li>
-          </ul>
+        <li class="pad-item">
+          <button class="drum-pad" type="button" data-key="d" data-code="KeyD" data-sound="kick" aria-label="Play Kick sound (Key D)">
+            <kbd class="key-label">D</kbd>
+            <span class="sound-label">Kick</span>
+          </button>
+        </li>
+        <li class="pad-item">
+          <button class="drum-pad" type="button" data-key="f" data-code="KeyF" data-sound="openhat" aria-label="Play Open Hat sound (Key F)">
+            <kbd class="key-label">F</kbd>
+            <span class="sound-label">Open Hat</span>
+          </button>
+        </li>
+        <li class="pad-item">
+          <button class="drum-pad" type="button" data-key="g" data-code="KeyG" data-sound="boom" aria-label="Play Boom sound (Key G)">
+            <kbd class="key-label">G</kbd>
+            <span class="sound-label">Boom</span>
+          </button>
+        </li>
+        <li class="pad-item">
+          <button class="drum-pad" type="button" data-key="h" data-code="KeyH" data-sound="ride" aria-label="Play Ride sound (Key H)">
+            <kbd class="key-label">H</kbd>
+            <span class="sound-label">Ride</span>
+          </button>
+        </li>
+        <li class="pad-item">
+          <button class="drum-pad" type="button" data-key="j" data-code="KeyJ" data-sound="snare" aria-label="Play Snare sound (Key J)">
+            <kbd class="key-label">J</kbd>
+            <span class="sound-label">Snare</span>
+          </button>
+        </li>
+        <li class="pad-item">
+          <button class="drum-pad" type="button" data-key="k" data-code="KeyK" data-sound="tom" aria-label="Play Tom sound (Key K)">
+            <kbd class="key-label">K</kbd>
+            <span class="sound-label">Tom</span>
+          </button>
+        </li>
+        <li class="pad-item">
+          <button class="drum-pad" type="button" data-key="l" data-code="KeyL" data-sound="tink" aria-label="Play Tink sound (Key L)">
+            <kbd class="key-label">L</kbd>
+            <span class="sound-label">Tink</span>
+          </button>
         </li>
       </ul>
     </section>
 
-    <!-- Projects Section -->
-    <section id="projects" class="section projects-section" aria-labelledby="projects-heading">
+    <!-- STEP 4 CONTRACT: FIFO Beat Recorder UI -->
+    <section id="recorder-section" class="section recorder-section" aria-labelledby="recorder-heading">
       <header class="section-header">
-        <h2 id="projects-heading" class="section-title">Featured Projects</h2>
-        <nav class="state-controls" aria-label="Component State Simulator">
-          <span class="state-controls-label">State Inspector:</span>
-          <button type="button" class="state-switch-btn" data-target-state="loading" aria-pressed="false">Loading</button>
-          <button type="button" class="state-switch-btn" data-target-state="success" aria-pressed="true">Live Data</button>
-          <button type="button" class="state-switch-btn" data-target-state="empty" aria-pressed="false">Empty</button>
-          <button type="button" class="state-switch-btn" data-target-state="error" aria-pressed="false">Error</button>
-        </nav>
+        <h2 id="recorder-heading" class="section-title">FIFO Beat Recorder</h2>
+        <p class="section-description">
+          Records acoustic events into a timestamped First-In, First-Out queue and replays them with sample-accurate scheduling.
+        </p>
       </header>
 
-      <section id="projects-feed" class="projects-feed" aria-labelledby="projects-heading" aria-live="polite">
-        <ul class="projects-grid">
-          <li class="project-item">
-            <article class="project-card" data-category="frontend">
-              <header class="card-header">
-                <h3 class="card-title">Distributed State Engine</h3>
-                <span class="badge">TypeScript</span>
-              </header>
-              <p class="card-desc">Lightweight event bus built without external libraries.</p>
-              <footer class="card-footer">
-                <a href="#projects" class="project-link" aria-label="View Distributed State Engine source code">Source Code</a>
-                <span class="card-stats">
-                  <span class="metadata-badge" aria-label="GitHub stars: 58"><span class="icon" aria-hidden="true">&#9733;</span> 58</span>
-                  <span class="metadata-badge" aria-label="Version 1.2.0"><span class="icon" aria-hidden="true">&#9672;</span> v1.2</span>
-                </span>
-              </footer>
-            </article>
-          </li>
-          <li class="project-item">
-            <article class="project-card" data-category="frontend">
-              <header class="card-header">
-                <h3 class="card-title">Token Theming Architecture</h3>
-                <span class="badge">CSS Grid</span>
-              </header>
-              <p class="card-desc">Zero-runtime CSS custom properties engine delivering WCAG 2.2 AA contrast compliance and persistent dark mode states.</p>
-              <footer class="card-footer">
-                <a href="#projects" class="project-link" aria-label="View Token Theming Architecture source code">Source Code</a>
-                <span class="card-stats">
-                  <span class="metadata-badge" aria-label="GitHub stars: 94"><span class="icon" aria-hidden="true">&#9733;</span> 94</span>
-                  <span class="metadata-badge" aria-label="Version 2.0.1"><span class="icon" aria-hidden="true">&#9672;</span> v2.0</span>
-                </span>
-              </footer>
-            </article>
-          </li>
-          <li class="project-item">
-            <article class="project-card" data-category="backend">
-              <header class="card-header">
-                <h3 class="card-title">Academic Information Portal</h3>
-                <span class="badge">MySQL / Node.js</span>
-              </header>
-              <p class="card-desc">Relational database management system with normalized 3NF schema and secure RESTful CRUD operations.</p>
-              <footer class="card-footer">
-                <a href="#projects" class="project-link" aria-label="View Academic Information Portal repository">Source Code</a>
-                <span class="card-stats">
-                  <span class="metadata-badge" aria-label="GitHub stars: 36"><span class="icon" aria-hidden="true">&#9733;</span> 36</span>
-                  <span class="metadata-badge" aria-label="Version 1.0.4"><span class="icon" aria-hidden="true">&#9672;</span> v1.0</span>
-                </span>
-              </footer>
-            </article>
-          </li>
-          <li class="project-item">
-            <article class="project-card" data-category="accessibility">
-              <header class="card-header">
-                <h3 class="card-title">Accessible Landmark Core</h3>
-                <span class="badge">WAI-ARIA</span>
-              </header>
-              <p class="card-desc">Strict semantic HTML5 landmark tree tested with screen-reader assistive navigation standards and keyboard flows.</p>
-              <footer class="card-footer">
-                <a href="#projects" class="project-link" aria-label="View Accessible Landmark Core source code">Source Code</a>
-                <span class="card-stats">
-                  <span class="metadata-badge" aria-label="GitHub stars: 112"><span class="icon" aria-hidden="true">&#9733;</span> 112</span>
-                  <span class="metadata-badge" aria-label="Version 3.1.0"><span class="icon" aria-hidden="true">&#9672;</span> v3.1</span>
-                </span>
-              </footer>
-            </article>
-          </li>
-        </ul>
-      </section>
-    </section>
-
-    <!-- Contact Form Section -->
-    <section id="contact" class="section contact-section" aria-labelledby="contact-heading">
-      <h2 id="contact-heading" class="section-title">Contact Me</h2>
-      <form id="contact-form" class="contact-form" novalidate aria-labelledby="contact-heading">
-        <p id="form-status" class="form-status" role="status" aria-live="polite" hidden></p>
-
-        <p class="form-group">
-          <label for="contact-name" class="form-label">Full Name <span class="required-indicator" aria-hidden="true">*</span></label>
-          <input id="contact-name" name="name" type="text" class="form-input" required autocomplete="name" placeholder="Your Name" aria-describedby="name-error">
-          <span id="name-error" class="field-error" aria-live="polite"></span>
-        </p>
-
-        <p class="form-group">
-          <label for="contact-email" class="form-label">Email Address <span class="required-indicator" aria-hidden="true">*</span></label>
-          <input id="contact-email" name="email" type="email" class="form-input" required autocomplete="email" placeholder="student@uit.edu.vn" aria-describedby="email-error">
-          <span id="email-error" class="field-error" aria-live="polite"></span>
-        </p>
-
-        <p class="form-group">
-          <label for="contact-subject" class="form-label">Subject</label>
-          <input id="contact-subject" name="subject" type="text" class="form-input" placeholder="Project or Academic Inquiry">
-        </p>
-
-        <p class="form-group">
-          <label for="contact-message" class="form-label">Message <span class="required-indicator" aria-hidden="true">*</span></label>
-          <textarea id="contact-message" name="message" class="form-textarea" rows="4" required placeholder="Write your message here..." aria-describedby="message-error"></textarea>
-          <span id="message-error" class="field-error" aria-live="polite"></span>
-        </p>
-
-        <button id="form-submit-btn" type="submit" class="submit-btn">
-          <span class="btn-text">Send Message</span>
+      <!-- Recorder Control Toolbar -->
+      <nav class="recorder-toolbar" aria-label="Recorder controls">
+        <button id="btn-record" class="recorder-btn record-action-btn" type="button" aria-pressed="false">
+          <span class="record-indicator" aria-hidden="true">&bull;</span>
+          <span class="btn-text">Record</span>
         </button>
-      </form>
+        <button id="btn-stop" class="recorder-btn stop-action-btn" type="button" disabled>
+          <span class="btn-icon" aria-hidden="true">&#9632;</span>
+          <span class="btn-text">Stop</span>
+        </button>
+        <button id="btn-play" class="recorder-btn play-action-btn" type="button" disabled>
+          <span class="btn-icon" aria-hidden="true">&#9658;</span>
+          <span class="btn-text">Play Queue</span>
+        </button>
+        <button id="btn-clear" class="recorder-btn clear-action-btn" type="button" disabled>
+          <span class="btn-icon" aria-hidden="true">&#10005;</span>
+          <span class="btn-text">Clear Queue</span>
+        </button>
+        <label class="loop-toggle-label">
+          <input id="checkbox-loop" type="checkbox" class="loop-checkbox">
+          <span class="checkbox-text">Loop Playback</span>
+        </label>
+      </nav>
+
+      <!-- Status HUD Metrics -->
+      <p class="recorder-hud" aria-label="Recorder metrics">
+        <span class="hud-item">
+          <strong class="hud-label">Status:</strong>
+          <span id="recorder-status" class="hud-status status-idle">IDLE</span>
+        </span>
+        <span class="hud-item">
+          <strong class="hud-label">Timer:</strong>
+          <span id="recorder-timer" class="hud-value font-mono">00:00.000</span>
+        </span>
+        <span class="hud-item">
+          <strong class="hud-label">Queue Size:</strong>
+          <span id="event-count" class="hud-value font-mono">0 events</span>
+        </span>
+      </p>
+
+      <!-- Timestamped Event Queue FIFO Visualizer -->
+      <article class="queue-card" aria-labelledby="queue-heading">
+        <header class="queue-header">
+          <h3 id="queue-heading" class="queue-title">Timestamped Event Queue (FIFO Log)</h3>
+          <span id="queue-badge" class="queue-badge">Empty Queue</span>
+        </header>
+        <ol id="queue-display" class="queue-display" aria-live="polite" aria-label="Chronological FIFO Beat Queue">
+          <li class="queue-placeholder">Queue is empty. Click "Record" and trigger drum pads to capture timestamped beats.</li>
+        </ol>
+      </article>
     </section>
+
+    <!-- Live Defense Panel (3-Minute Contract Rebinding Protocol) -->
+    <aside class="section defense-panel" aria-labelledby="defense-heading">
+      <header class="section-header">
+        <h2 id="defense-heading" class="section-title">Live Defense: Keybinding Contract Rebinding</h2>
+        <p class="section-description">
+          Architecture decouples physical keys from audio synthesis. Key bindings reside exclusively in HTML <code>data-key</code> and <code>data-code</code> attributes.
+        </p>
+      </header>
+      <ol class="defense-steps">
+        <li class="step-item">
+          <strong>Step 1:</strong> Locate target pad in <code>index.html</code> (e.g. <code>&lt;button class="drum-pad" data-sound="kick"&gt;</code>).
+        </li>
+        <li class="step-item">
+          <strong>Step 2:</strong> Change <code>data-key="x"</code>, <code>data-code="KeyX"</code>, and <code>&lt;kbd class="key-label"&gt;X&lt;/kbd&gt;</code>.
+        </li>
+        <li class="step-item">
+          <strong>Step 3:</strong> Save and reload. The input controller queries the DOM contract dynamically — <strong>Zero JS refactor required</strong> (&lt; 30 seconds).
+        </li>
+      </ol>
+    </aside>
+
   </main>
 
   <!-- Footer Landmark -->
   <footer role="contentinfo" class="site-footer" aria-label="Site footer">
-    <p class="footer-text">&copy; 2026 Tran Huu Thang. Built with semantic HTML & modern CSS Grid.</p>
+    <p class="footer-text">&copy; 2026 Tran Huu Thang (24521614) &bull; Information Systems &bull; UIT (VNU-HCM). Built with decoupled contract-first architecture &amp; Web Audio API.</p>
   </footer>
 </body>
 </html>

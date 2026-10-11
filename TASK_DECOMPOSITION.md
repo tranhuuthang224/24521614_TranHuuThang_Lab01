@@ -26,6 +26,10 @@
 | **HW1-M2** | Focus Trap Audit | Keyboard Tab & Enter flow, skip-link, no focus traps | **Completed** | Linear Tab order, skip-link targets `#main-content`, Commit: `fix(nav): keyboard trap prevention` |
 | **HW1-M3** | Strict CSP & Zero Inline Handlers | Content Security Policy, externalize inline scripts | **Completed** | Zero `onclick=`, strict CSP meta tag, Commit: `fix(security): strict CSP policy` |
 | **HW1-M4** | Lighthouse 100 Audit | Performance, SEO, Best Practices, Accessibility optimization | **Completed** | LCP < 2.0s, meta description, favicon, Commit: `perf: optimize assets` |
+| **HW2-S1** | HTML data-sound Contract | Drum pad elements with decoupled data-sound & data-key contracts | **Completed** | 0 `<div>` tags, zero JS touched in step, Commit: `feat(html): drum kit data-sound contract` |
+| **HW2-S2** | Polyphonic Audio Engine | Web Audio API synthesis with independent polyphony | **In Progress** | No DOM dependencies, concurrent voices, Commit: `feat(audio): polyphonic playback engine` |
+| **HW2-S3** | Keydown Throttled Input | keydown listener with event.repeat throttling & contract lookup | **Planned** | Throttle repeat, dynamic key lookup, Commit: `feat(input): keydown listener with repeat throttling` |
+| **HW2-S4** | FIFO Beat Recorder | Timestamped event queue with record, playback, and FIFO visualization | **Planned** | Chronological FIFO queue, Commit: `feat(recorder): fifo beat recorder with timestamped queue` |
 
 ---
 
@@ -126,5 +130,66 @@
 - Verify LCP element loads efficiently (< 2.0s on Fast 3G).
 - Optimize asset loading order and render-blocking resources.
 
+---
 
+## HW2: Drum Kit Engine (Contract-First Architecture)
+
+### 1. Mandatory Architectural Decoupling Philosophy
+HW2 implements strict architectural separation of concerns across 4 discrete layers:
+1. **Markup Layer (Contract)**: HTML declares the relationship between hardware keys and acoustic samples using standard `data-*` attributes (`data-key`, `data-code`, `data-sound`). The markup contains zero presentation logic and zero behavioral logic.
+2. **Audio Layer (Engine)**: Polyphonic synthesis engine operating strictly via the Web Audio API (`AudioContext`). It accepts sound tokens (`clap`, `kick`, `snare`, etc.) and produces concurrent acoustic voices without voice-stealing or clipping. It has zero coupling to the DOM or keyboard events.
+3. **Input Layer (Controller)**: Event listener capturing hardware `keydown` and pointer interactions. It implements hardware `event.repeat` throttling to discard OS auto-repeat chatter and translates physical inputs into acoustic tokens via dynamic DOM contract querying.
+4. **Recording Layer (FIFO Queue)**: Temporal event sequencer maintaining a timestamped First-In, First-Out queue of acoustic events. It supports real-time recording, high-precision playback, visual queue inspection, and loop cycles.
+
+### 2. HTML data-sound Contract Matrix
+
+| Key | Keyboard Code | Acoustic Token | Audio Characteristic | HTML Representation |
+|:---:|:---:|:---:|:---:|:---|
+| **A** | `KeyA` | `clap` | Multi-burst synthesized handclap with snappy decay | `<button class="drum-pad" data-key="a" data-code="KeyA" data-sound="clap">` |
+| **S** | `KeyS` | `hihat` | High-pass filtered white noise burst (7 kHz, 0.05s) | `<button class="drum-pad" data-key="s" data-code="KeyS" data-sound="hihat">` |
+| **D** | `KeyD` | `kick` | Punchy 808-style sine sweep (150 Hz -> 30 Hz) | `<button class="drum-pad" data-key="d" data-code="KeyD" data-sound="kick">` |
+| **F** | `KeyF` | `openhat` | Resonant high-pass white noise with prolonged release | `<button class="drum-pad" data-key="f" data-code="KeyF" data-sound="openhat">` |
+| **G** | `KeyG` | `boom` | Deep sub-bass acoustic drop (55 Hz -> 24 Hz, 0.8s) | `<button class="drum-pad" data-key="g" data-code="KeyG" data-sound="boom">` |
+| **H** | `KeyH` | `ride` | High-frequency metallic inharmonic overtone cluster | `<button class="drum-pad" data-key="h" data-code="KeyH" data-sound="ride">` |
+| **J** | `KeyJ` | `snare` | Dual-layer body oscillator (180 Hz) + filtered snare noise | `<button class="drum-pad" data-key="j" data-code="KeyJ" data-sound="snare">` |
+| **K** | `KeyK` | `tom` | Tuned mid-range acoustic resonant sweep (120 Hz -> 65 Hz) | `<button class="drum-pad" data-key="k" data-code="KeyK" data-sound="tom">` |
+| **L** | `KeyL` | `tink` | High-frequency acoustic bell/triangle strike (1800 Hz) | `<button class="drum-pad" data-key="l" data-code="KeyL" data-sound="tink">` |
+
+### 3. FIFO Beat Recorder State Flow & Queue Specification
+
+```
+      +-------------+
+      |    IDLE     | <-------------------------+
+      +-------------+                           |
+             |                                  |
+      (START_RECORD)                            |
+             v                                  |
+      +-------------+      (STOP_RECORD)        |
+      |  RECORDING  | --------------------------+
+      |  (Push FIFO)|                           |
+      +-------------+                           |
+             |                                  |
+       (START_PLAY)                             |
+             v                                  |
+      +-------------+      (FINISH / STOP)      |
+      |   PLAYING   | --------------------------+
+      | (Iter FIFO) |
+      +-------------+
+```
+
+- **FIFO Queue Entry Schema**:
+  ```typescript
+  interface DrumEvent {
+    id: number;          // Monotonic sequence index (1, 2, 3...)
+    sound: string;       // Acoustic token ('kick', 'snare', etc.)
+    timestamp: number;   // Milliseconds elapsed since recording start (performance.now() - t0)
+  }
+  ```
+
+### 4. 3-Minute Live Defense Protocol
+When the instructor requests changing a key binding (e.g., *“Change Kick from 'D' to 'X'”*):
+1. Locate the target `<button class="drum-pad" data-sound="kick">` in [index.html](file:///c:/Work/UIT/web%20dev/lab1/index.html).
+2. Modify `data-key="x"`, `data-code="KeyX"`, and the visual label `<kbd>X</kbd>`.
+3. Save and refresh the browser.
+4. **Refactor Time:** < 30 seconds. Because JavaScript queries `[data-key="${key}"]` directly from the DOM contract without hardcoded lookup tables, zero code changes are required in the JS engine.
 

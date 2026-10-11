@@ -24,6 +24,10 @@
   --color-error-bg: #fef2f2;
   --color-skeleton-base: #e2e8f0;
   --color-skeleton-highlight: #f1f5f9;
+  --color-accent: #f59e0b;
+  --color-accent-glow: rgba(245, 158, 11, 0.35);
+  --color-recording: #ef4444;
+  --color-recording-glow: rgba(239, 68, 68, 0.35);
 
   /* Typography */
   --font-family-base: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
@@ -79,6 +83,10 @@
   --color-error-bg: #450a0a;
   --color-skeleton-base: #1e293b;
   --color-skeleton-highlight: #334155;
+  --color-accent: #fbbf24;
+  --color-accent-glow: rgba(251, 191, 36, 0.45);
+  --color-recording: #f87171;
+  --color-recording-glow: rgba(248, 113, 113, 0.45);
   --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.4);
   --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.5), 0 2px 4px -2px rgba(0, 0, 0, 0.5);
 }
@@ -103,6 +111,10 @@
     --color-error-bg: #450a0a;
     --color-skeleton-base: #1e293b;
     --color-skeleton-highlight: #334155;
+    --color-accent: #fbbf24;
+    --color-accent-glow: rgba(251, 191, 36, 0.45);
+    --color-recording: #f87171;
+    --color-recording-glow: rgba(248, 113, 113, 0.45);
     --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.4);
     --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.5), 0 2px 4px -2px rgba(0, 0, 0, 0.5);
   }
@@ -912,6 +924,442 @@ body {
   outline: 2px solid var(--color-focus);
   outline-offset: 2px;
 }
+
+/* ==========================================================================
+   7. HW2: DRUM KIT ENGINE & FIFO BEAT RECORDER (CONTRACT-FIRST)
+   ========================================================================== */
+
+/* Header student metadata */
+.student-meta {
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+  color: var(--color-primary);
+  margin-top: var(--space-2xs);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+/* Section description typography */
+.section-description {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+  line-height: var(--line-height-base);
+  margin-bottom: var(--space-md);
+}
+
+/* --------------------------------------------------------------------------
+   Acoustic Drum Pads Matrix (CSS Grid, Zero <div> tags)
+   -------------------------------------------------------------------------- */
+.drum-kit-section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.pads-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(105px, 1fr));
+  gap: var(--space-md);
+  list-style: none;
+  width: 100%;
+}
+
+.pad-item {
+  display: flex;
+}
+
+.drum-pad {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-xs);
+  width: 100%;
+  min-height: 120px;
+  padding: var(--space-md) var(--space-xs);
+  background-color: var(--color-surface);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  color: var(--color-text);
+  cursor: pointer;
+  user-select: none;
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.07s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+              border-color 0.07s ease,
+              box-shadow 0.07s ease,
+              background-color 0.07s ease;
+}
+
+.drum-pad:hover {
+  background-color: var(--color-surface-hover);
+  border-color: var(--color-primary);
+  transform: translateY(-2px);
+}
+
+/* Hardware keycap styling (<kbd>) */
+.drum-pad .key-label {
+  display: inline-block;
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-2xl);
+  font-weight: 800;
+  color: var(--color-text);
+  line-height: 1;
+  pointer-events: none;
+}
+
+/* Acoustic sound name label */
+.drum-pad .sound-label {
+  font-size: var(--font-size-xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-text-muted);
+  pointer-events: none;
+}
+
+/* Dynamic acoustic trigger state (.playing) */
+.drum-pad.playing {
+  transform: scale(1.08) translateY(-4px);
+  border-color: var(--color-accent);
+  background-color: var(--color-surface-hover);
+  box-shadow: 0 0 24px var(--color-accent-glow), 0 8px 16px var(--shadow-md);
+}
+
+.drum-pad.playing .key-label {
+  color: var(--color-accent);
+}
+
+.drum-pad.playing .sound-label {
+  color: var(--color-text);
+}
+
+.drum-pad:focus-visible {
+  outline: 3px solid var(--color-focus);
+  outline-offset: 3px;
+}
+
+/* --------------------------------------------------------------------------
+   FIFO Beat Recorder Toolbar & HUD Controls
+   -------------------------------------------------------------------------- */
+.recorder-section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.recorder-toolbar {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+  padding: var(--space-md);
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+}
+
+.recorder-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-xs);
+  padding: var(--space-xs) var(--space-md);
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-sm);
+  font-weight: 700;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-border);
+  background-color: var(--color-surface);
+  color: var(--color-text);
+  cursor: pointer;
+  transition: background-color var(--transition-fast),
+              border-color var(--transition-fast),
+              transform var(--transition-fast),
+              opacity var(--transition-fast);
+}
+
+.recorder-btn:hover:not(:disabled) {
+  background-color: var(--color-surface-hover);
+  border-color: var(--color-primary);
+  transform: translateY(-1px);
+}
+
+.recorder-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.recorder-btn:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 2px;
+}
+
+/* Record Button with dynamic recording state */
+.record-action-btn .record-indicator {
+  color: var(--color-recording);
+  font-size: var(--font-size-lg);
+  line-height: 1;
+}
+
+.record-action-btn[aria-pressed="true"] {
+  background-color: var(--color-recording-glow);
+  border-color: var(--color-recording);
+  color: var(--color-recording);
+  animation: pulse-recording 1.2s infinite ease-in-out;
+}
+
+@keyframes pulse-recording {
+  0% { box-shadow: 0 0 0 0 var(--color-recording-glow); }
+  70% { box-shadow: 0 0 0 10px rgba(0, 0, 0, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(0, 0, 0, 0); }
+}
+
+.play-action-btn {
+  color: var(--color-success);
+}
+
+.play-action-btn:hover:not(:disabled) {
+  border-color: var(--color-success);
+}
+
+.stop-action-btn {
+  color: var(--color-error);
+}
+
+.stop-action-btn:hover:not(:disabled) {
+  border-color: var(--color-error);
+}
+
+.clear-action-btn {
+  color: var(--color-text-muted);
+}
+
+/* Loop Toggle Checkbox */
+.loop-toggle-label {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  margin-left: auto;
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+  color: var(--color-text-muted);
+  cursor: pointer;
+  user-select: none;
+}
+
+.loop-checkbox {
+  accent-color: var(--color-primary);
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+}
+
+/* --------------------------------------------------------------------------
+   Recorder HUD Metrics (Monospace Timer & Status Badge)
+   -------------------------------------------------------------------------- */
+.recorder-hud {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-lg);
+  padding: var(--space-sm) var(--space-md);
+  background-color: var(--color-surface-hover);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+}
+
+.hud-item {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  font-size: var(--font-size-xs);
+}
+
+.hud-label {
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.hud-status {
+  display: inline-block;
+  padding: 2px 8px;
+  font-weight: 800;
+  font-size: var(--font-size-xs);
+  border-radius: var(--radius-sm);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.hud-status.status-idle {
+  background-color: var(--color-surface);
+  color: var(--color-text-muted);
+  border: 1px solid var(--color-border);
+}
+
+.hud-status.status-recording {
+  background-color: var(--color-error-bg);
+  color: var(--color-recording);
+  border: 1px solid var(--color-recording);
+}
+
+.hud-status.status-playing {
+  background-color: var(--color-success-bg);
+  color: var(--color-success);
+  border: 1px solid var(--color-success);
+}
+
+.font-mono {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+/* --------------------------------------------------------------------------
+   Timestamped Event Queue FIFO Card & Visualizer
+   -------------------------------------------------------------------------- */
+.queue-card {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+}
+
+.queue-header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-sm) var(--space-md);
+  background-color: var(--color-surface-hover);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.queue-title {
+  font-size: var(--font-size-sm);
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+.queue-badge {
+  font-size: var(--font-size-xs);
+  font-weight: 700;
+  color: var(--color-text-muted);
+  background-color: var(--color-surface);
+  padding: 2px 8px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-border);
+}
+
+.queue-display {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2xs);
+  padding: var(--space-sm) var(--space-md);
+  list-style: none;
+  max-height: 240px;
+  overflow-y: auto;
+  min-height: 90px;
+}
+
+.queue-placeholder {
+  color: var(--color-text-muted);
+  font-size: var(--font-size-xs);
+  font-style: italic;
+  padding: var(--space-sm) 0;
+  text-align: center;
+}
+
+/* FIFO Queue Entry Item */
+.queue-item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-2xs) var(--space-sm);
+  background-color: var(--color-surface-hover);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  font-size: var(--font-size-xs);
+  transition: background-color var(--transition-fast), border-color var(--transition-fast);
+}
+
+.queue-item-seq {
+  font-family: ui-monospace, monospace;
+  font-weight: 700;
+  color: var(--color-text-muted);
+  min-width: 40px;
+}
+
+.queue-item-sound {
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--color-primary);
+  background-color: var(--color-surface);
+  padding: 2px 6px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-border);
+}
+
+.queue-item-time {
+  font-family: ui-monospace, monospace;
+  color: var(--color-text-muted);
+}
+
+/* Highlighted queue item during chronological playback */
+.queue-item.active-event {
+  background-color: var(--color-accent-glow);
+  border-color: var(--color-accent);
+}
+
+.queue-item.active-event .queue-item-sound {
+  color: var(--color-accent);
+  border-color: var(--color-accent);
+}
+
+/* --------------------------------------------------------------------------
+   Live Defense Panel Styling
+   -------------------------------------------------------------------------- */
+.defense-panel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  padding: var(--space-md);
+  background-color: var(--color-surface);
+  border: 2px dashed var(--color-accent);
+  border-radius: var(--radius-md);
+}
+
+.defense-panel .section-title {
+  color: var(--color-accent);
+  font-size: var(--font-size-lg);
+}
+
+.defense-steps {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  padding-left: var(--space-lg);
+  font-size: var(--font-size-sm);
+  color: var(--color-text);
+  line-height: var(--line-height-base);
+}
+
+.step-item code {
+  font-family: ui-monospace, monospace;
+  font-size: var(--font-size-xs);
+  background-color: var(--color-surface-hover);
+  padding: 2px 4px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-border);
+}
+
 
 
 
