@@ -28,8 +28,8 @@
 | **HW1-M4** | Lighthouse 100 Audit | Performance, SEO, Best Practices, Accessibility optimization | **Completed** | LCP < 2.0s, meta description, favicon, Commit: `perf: optimize assets` |
 | **HW2-S1** | HTML data-sound Contract | Drum pad elements with decoupled data-sound & data-key contracts | **Completed** | 0 `<div>` tags, zero JS touched in step, Commit: `feat(html): drum kit data-sound contract` |
 | **HW2-S2** | Polyphonic Audio Engine | Web Audio API synthesis with independent polyphony | **Completed** | No DOM dependencies, concurrent voices, Commit: `feat(audio): polyphonic playback engine` |
-| **HW2-S3** | Keydown Throttled Input | keydown listener with event.repeat throttling & contract lookup | **In Progress** | Throttle repeat, dynamic key lookup, Commit: `feat(input): keydown listener with repeat throttling` |
-| **HW2-S4** | FIFO Beat Recorder | Timestamped event queue with record, playback, and FIFO visualization | **Planned** | Chronological FIFO queue, Commit: `feat(recorder): fifo beat recorder with timestamped queue` |
+| **HW2-S3** | Keydown Throttled Input | keydown listener with event.repeat throttling & contract lookup | **Completed** | Throttle repeat, dynamic key lookup, Commit: `feat(input): keydown listener with repeat throttling` |
+| **HW2-S4** | FIFO Beat Recorder | Timestamped event queue with record, playback, and FIFO visualization | **In Progress** | Chronological FIFO queue, Commit: `feat(recorder): fifo beat recorder with timestamped queue` |
 
 ---
 
