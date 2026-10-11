@@ -34,7 +34,7 @@
 | **HW3-T02** | Slice 1: Drift-Free Countdown | UTC ISO 8601 countdown engine with self-correcting drift compensation | **Completed** | Absolute epoch delta, Page Visibility API, Commit: `feat(countdown): drift-free countdown engine with UTC ISO 8601 timestamps` |
 | **HW3-T03** | Slice 2: State-Machine Form | Finite state machine (Idle -> Submitting -> Success/Error) | **Completed** | State transitions, accessible feedback, Commit: `feat(form): state-machine registration form engine` |
 | **HW3-T04** | Slice 3: Security & Sanitization | Atomic double-submit prevention lock & zero-XSS string sanitization | **Completed** | Synchronous lock flag, strict textContent escaping, Commit: `feat(security): double-submit prevention & zero-XSS sanitization` |
-| **HW3-T05** | AI Failure Mode Report | Comprehensive audit of 3 AI defects, diagnostics, and refactored solutions | **In Progress** | Documented in `AI_FAILURE_AUDIT.md`, Commit: `docs(audit): document AI failure modes and defensive engineering in AI_FAILURE_AUDIT.md` |
+| **HW3-T05** | AI Failure Mode Report | Comprehensive audit of 3 AI defects, diagnostics, and refactored solutions | **Completed** | Documented in `AI_FAILURE_AUDIT.md`, Commit: `docs(audit): document AI failure modes and defensive engineering in AI_FAILURE_AUDIT.md` |
 
 ---
 
