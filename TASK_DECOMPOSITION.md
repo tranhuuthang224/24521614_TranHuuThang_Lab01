@@ -30,6 +30,11 @@
 | **HW2-S2** | Polyphonic Audio Engine | Web Audio API synthesis with independent polyphony | **Completed** | No DOM dependencies, concurrent voices, Commit: `feat(audio): polyphonic playback engine` |
 | **HW2-S3** | Keydown Throttled Input | keydown listener with event.repeat throttling & contract lookup | **Completed** | Throttle repeat, dynamic key lookup, Commit: `feat(input): keydown listener with repeat throttling` |
 | **HW2-S4** | FIFO Beat Recorder | Timestamped event queue with record, playback, and FIFO visualization | **Completed** | Chronological FIFO queue, Commit: `feat(recorder): fifo beat recorder with timestamped queue` |
+| **HW3-T01** | Landing Page Markup Contract | Semantic landing page shell, UTC ISO 8601 countdown contract, registration form | **Completed** | 0 `<div>` tags, zero JS in commit, Commit: `feat(html): semantic landing page contract with zero div elements` |
+| **HW3-T02** | Slice 1: Drift-Free Countdown | UTC ISO 8601 countdown engine with self-correcting drift compensation | **In Progress** | Absolute epoch delta, Page Visibility API, Commit: `feat(countdown): drift-free countdown engine with UTC ISO 8601 timestamps` |
+| **HW3-T03** | Slice 2: State-Machine Form | Finite state machine (Idle -> Submitting -> Success/Error) | **Planned** | State transitions, accessible feedback, Commit: `feat(form): state-machine registration form engine` |
+| **HW3-T04** | Slice 3: Security & Sanitization | Atomic double-submit prevention lock & zero-XSS string sanitization | **Planned** | Synchronous lock flag, strict textContent escaping, Commit: `feat(security): double-submit prevention & zero-XSS sanitization` |
+| **HW3-T05** | AI Failure Mode Report | Comprehensive audit of 3 AI defects, diagnostics, and refactored solutions | **Planned** | Documented in `AI_FAILURE_AUDIT.md`, Commit: `docs(audit): document AI failure modes and defensive engineering in AI_FAILURE_AUDIT.md` |
 
 ---
 
@@ -193,3 +198,44 @@ When the instructor requests changing a key binding (e.g., *“Change Kick from 
 3. Save and refresh the browser.
 4. **Refactor Time:** < 30 seconds. Because JavaScript queries `[data-key="${key}"]` directly from the DOM contract without hardcoded lookup tables, zero code changes are required in the JS engine.
 
+---
+
+## HW3: Resilient Landing Page (3 Slices & AI Failure Mode Audit)
+
+### 1. Architectural Slices & Contracts
+HW3 partitions the landing page into 3 resilient engineering slices:
+
+#### Slice 1: Drift-Free Countdown Engine
+- **Contract**: `<time id="countdown-timer" class="countdown-display" datetime="2026-12-31T23:59:59Z" data-target="2026-12-31T23:59:59Z">`
+- **Timezone**: Strict UTC ISO 8601 parsing (`Z` specifier) avoids local timezone conversion defects.
+- **Drift-Free Scheduling**: Delta computation `Math.max(0, targetEpoch - Date.now())` per tick rather than cumulative decrements (`t--`). Self-compensates for background tab throttling using the Page Visibility API (`visibilitychange`).
+- **Resource Management**: Automatically clears timer references on completion or unmount, preventing detached context leaks.
+
+#### Slice 2: State-Machine Form Engine
+- **Finite State Machine Model**:
+  ```
+        [ IDLE ]
+           |  (SUBMIT - Validated)
+           v
+     [ SUBMITTING ] (Lock UI, aria-busy="true")
+         /        \
+  (RESOLVE)      (REJECT)
+       v            v
+  [ SUCCESS ]    [ ERROR ]
+       |            |
+    (RESET)      (RETRY / EDIT)
+       v            v
+     [ IDLE ] <-----+
+  ```
+- **Accessible State Feedback**: Status announcements via `<output role="status" aria-live="polite">` and `<p role="alert">`.
+
+#### Slice 3: Double-Submit Prevention & Zero-XSS Sanitization
+- **Double-Submit Prevention**: Synchronous boolean mutex lock (`isSubmitting`) prevents rapid double-clicks and Enter-key spam before async promises resolve. Form controls disabled atomically.
+- **Input Sanitization**: Zero `innerHTML` injection with user-supplied data. All dynamic text rendered strictly via `textContent` or `document.createTextNode()`. Input escaping utility sanitizes HTML special characters (`&`, `<`, `>`, `"`, `'`, `/`).
+- **Strict CSP**: Enforces `<meta http-equiv="Content-Security-Policy">` with `default-src 'self'`.
+
+### 2. Mandatory AI Failure Mode Report (`AI_FAILURE_AUDIT.md`)
+Documents 3 real-world AI failure modes caught during development:
+1. **Defect 1**: Cumulative `setInterval` Drift & Local Timezone Parsing (AI pattern: `setInterval(() => remaining--, 1000)`).
+2. **Defect 2**: Race Conditions & Double-Submit State Desynchronization (AI pattern: async click listener without synchronous mutex).
+3. **Defect 3**: Reflected XSS via `innerHTML` Injection in Confirmation Feedback (AI pattern: `el.innerHTML = "Welcome " + name`).
